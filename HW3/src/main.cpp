@@ -7,7 +7,7 @@ using namespace std;
 int main()
 {
     State_assigner SA;
-    std::ifstream infile("./resource/benchmarks/bbara_opt.kiss");
+    std::ifstream infile("./resource/benchmarks/paper_example.kiss");
     if(!infile.is_open()) 
     {
         cerr << "OPEN FAILED!!!" << endl;
@@ -16,7 +16,11 @@ int main()
     {
         cout << "IFSTREAM WORKS!" << endl;
     }
-    SA.parser(infile);
+    SA.parser(infile);  // parse the input and create conditional transition matrix
+    SA.printCircuitStatus();
+    SA.printTransitionMatrix();
+    SA.recomputeMatrix();
+
     cout << "SA is ok to call!!!" << endl;
     return 0;
 }
