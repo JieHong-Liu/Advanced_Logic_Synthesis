@@ -16,11 +16,11 @@ int main()
     {
         cout << "IFSTREAM WORKS!" << endl;
     }
-    SA.parser(infile);  // parse the input and create conditional transition matrix
+    SA.parser(infile);  // parse the input and create conditional transition matrix and create node for stg.ledagraph
     SA.printCircuitStatus();
     SA.printTransitionMatrix();
-    SA.recomputeMatrix();
-
+    SA.recomputeMatrix(); // calculate each state probability (not switching probability)
+    SA.setEdgeWeight(); // translate STG to weighted undirected graph (integer type)
     cout << "SA is ok to call!!!" << endl;
     return 0;
 }
