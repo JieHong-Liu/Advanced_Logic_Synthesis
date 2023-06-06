@@ -11,10 +11,22 @@ namespace Process // a namespace avoid to confuse with LEDA/graph
             this->name = name;
             this->id = id;
             this->stateProb = 0.0;
+            this->assigned = false;
+            this->stateCode = "";
+            this->stateNumber = -1; // use int to represent stateCode;
         }
-        std::string name;
+        bool isAssigned(int index)
+        {
+            if(this->stateCode[index] == 'x') return false;
+            else {return true;}
+        }
         int id; 
+        int stateNumber;
+        bool assigned;
         double stateProb;
+        std::string name;
+        std::string stateCode;
+
     };
     struct EdgeInfo
     {

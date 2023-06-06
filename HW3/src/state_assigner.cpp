@@ -5,6 +5,9 @@
 #include <sstream>
 #include <LEDA/graph/edge_array.h>   // Edge array data structure
 #include <LEDA/graph/graph.h>
+#include <LEDA/graph/mw_matching.h>
+#include <bitset>
+
 extern "C"
 {
     #include "glpk.h"
@@ -21,8 +24,10 @@ State_assigner::State_assigner()
     _numOutputs      = 0;
     _numStates       = 0;
     _numTransitions  = 0;
-    _nodeNum        = 0;
+    _nodeNum         = 0;
     _initialState    = "";
+    _codeLength      = 0;
+    _stateCounter    = 0;
 }
 
 double State_assigner::getProb(std::string& input)
@@ -331,7 +336,7 @@ void State_assigner::recomputeMatrix()
     }
     cout << "After multiple Pi: "<< endl;
     printTransitionMatrix(); 
-    for (int i = 0; i < _numStates; i++)
+    for (int i = 0; i < _numStates; i++)    // perform two states addition
     {
         for (int j = 0; j < _numStates; j++)
         {
@@ -342,25 +347,12 @@ void State_assigner::recomputeMatrix()
             }
         }
     }
+    cout << endl << endl << "PERFROM TWO STATES ADDITION: " << endl;
     printTransitionMatrix();
     normalizeMatrix(transitionMatrix);
+    cout << endl << endl << "Perform normalization : "<< endl;
     printTransitionMatrix();
 }
-
-void State_assigner::setEdgeWeight()
-{
-    edge e;
-    // Iterate over all edges in the graph
-    forall_edges(e, STG.ledaGraph) 
-    {
-        auto edgeInfo = STG.ledaGraph.inf(e);
-        int sourceID = STG.ledaGraph.inf(STG._stateName2Node[edgeInfo->source])->id ;
-        int targetID = STG.ledaGraph.inf(STG._stateName2Node[edgeInfo->target])->id ;
-        edgeInfo->weight = transitionMatrix[sourceID][targetID];
-        cout << "[" << sourceID << "]\t(" << edgeInfo->weight << ")\t[" << targetID << "]" << endl;          
-    }
-}
-
 
 // Function to normalize and convert the matrix to integers
 void State_assigner::normalizeMatrix(std::vector<std::vector<double>>& matrix)
@@ -386,7 +378,237 @@ void State_assigner::normalizeMatrix(std::vector<std::vector<double>>& matrix)
     // Step 3 (Optional): Round each element to the nearest integer
     for (auto& row : matrix) {
         for (double& value : row) {
-            value = std::round(value);
+            // value = std::round(value);
+            value = std::ceil(value);
         }
     }
+}
+
+bool State_assigner::haveClassViolation(node state1, node state2, int index)
+{
+    bool sameCode = false; // this bool represent to two states are the same  
+    if(index == 0) return false;
+    else 
+    {
+        for (int i = 0 ; i < index; i++)
+        {
+            if(STG.ledaGraph.inf(state1)->stateCode[i] == STG.ledaGraph.inf(state2)->stateCode[i])
+            {
+                sameCode = true;
+            }
+            else 
+            {
+                sameCode = false; // no need to check anymore
+                break;
+            }
+        }
+    }
+    return sameCode;
+}
+
+
+void State_assigner::assignState()
+{
+    edge e;
+    // Iterate over all edges in the graph (set edge weight)
+    forall_edges(e, STG.ledaGraph) 
+    {
+        auto edgeInfo = STG.ledaGraph.inf(e);
+        int sourceID = STG.ledaGraph.inf(STG._stateName2Node[edgeInfo->source])->id ;
+        int targetID = STG.ledaGraph.inf(STG._stateName2Node[edgeInfo->target])->id ;
+        edgeInfo->weight = transitionMatrix[sourceID][targetID];
+        // cout << "[" << sourceID << "](" << edgeInfo->source << ")\t\t(" << edgeInfo->weight << ")\t\t[" << targetID << "](" <<edgeInfo->target<<")" << endl;
+        // weight[e] = edgeInfo->weight;          
+    }
+
+    // sorting edge with decreasing order
+    for (int i = 0; i < STG.edgeInfos.size(); i++)
+    {
+        for (int j = 0; j < STG.edgeInfos.size() - i - 1; j++)
+        {
+            if(STG.edgeInfos[j]->weight < STG.edgeInfos[j+1]->weight)
+            {
+                Process::EdgeInfo* tmp = STG.edgeInfos[j];
+                STG.edgeInfos[j] = STG.edgeInfos[j+1];
+                STG.edgeInfos[j+1] = tmp;
+            }
+        }
+    }
+    cout << "EDGE INFOS after sorted: " << endl;
+    for (int i = 0 ; i < STG.edgeInfos.size(); i++)
+    {
+        cout << STG.edgeInfos[i]->source << "\t" << STG.edgeInfos[i]->weight << "\t" << STG.edgeInfos[i]->target << endl;
+    }
+
+    cout << "assign states for each state!!!" << endl;
+    _codeLength = std::ceil(log2(_numStates));
+    cout << "codeLength = " << _codeLength << endl;
+    for (int i = 0; i < STG.nodeInfos.size(); i++)
+    {
+        STG.nodeInfos[i]->stateCode= std::string(_codeLength,'x'); // state code initialization
+        cout << STG.nodeInfos[i]->name <<":\t" <<STG.nodeInfos[i]->stateCode << endl;
+    }
+
+
+    cout << "Perform pseudo code: " << endl;
+    for (int i = 0 ; i < STG.edgeInfos.size(); i++) // for each edge {Si,Sj}
+    {
+        for (int j = 0 ; j < _codeLength; j++) // index of stateCode
+        {
+            if(STG.ledaGraph.inf(STG._stateName2Node[STG.edgeInfos[i]->source])->isAssigned(j)==false && STG.ledaGraph.inf(STG._stateName2Node[STG.edgeInfos[i]->target])->isAssigned(j) == false)
+            {
+                // cout << STG.edgeInfos[i]->source << "[" << j << "] and " << STG.edgeInfos[i]->target << "[" << j << "]"" are not assigned !" << endl;
+                if(haveClassViolation(STG._stateName2Node[STG.edgeInfos[i]->source], STG._stateName2Node[STG.edgeInfos[i]->target], j) == false) // no class violation
+                {
+                    bool x = selectBit(STG._stateName2Node[STG.edgeInfos[i]->source], STG._stateName2Node[STG.edgeInfos[i]->target], j);
+                    // cout << STG.edgeInfos[i]->source << "and " << STG.edgeInfos[i]->target << " do not have class violation!!!" << endl;
+                    // cout << "SelectedBit for " << STG.edgeInfos[i]->source << "[" << j << "]" << " and " << STG.edgeInfos[i]->target << "[" << j << "] is " << x << endl;
+                    STG.ledaGraph.inf(STG._stateName2Node[STG.edgeInfos[i]->source])->stateCode[j] = x + '0';
+                    STG.ledaGraph.inf(STG._stateName2Node[STG.edgeInfos[i]->target])->stateCode[j] = x + '0';
+                }
+                else
+                {
+                    // cout << STG.edgeInfos[i]->source << "and " << STG.edgeInfos[i]->target << " do have class violation!!!" << endl;
+                    bool x = selectBit(STG._stateName2Node[STG.edgeInfos[i]->source], STG._stateName2Node[STG.edgeInfos[i]->target], j);
+                    // cout << STG.edgeInfos[i]->source << "and " << STG.edgeInfos[i]->target << " do not have class violation!!!" << endl;
+                    STG.ledaGraph.inf(STG._stateName2Node[STG.edgeInfos[i]->source])->stateCode[j] = x + '0';
+                    STG.ledaGraph.inf(STG._stateName2Node[STG.edgeInfos[i]->target])->stateCode[j] = !x + '0';
+                    // cout << "SelectedBit for " << STG.edgeInfos[i]->source << "[" << j << "]is " << x + '0'<< endl;
+                    // cout << "SelectedBit for " << STG.edgeInfos[i]->target << "[" << j << "]is " << (!x) + '0'<< endl;
+                }
+            }
+            else if (STG.ledaGraph.inf(STG._stateName2Node[STG.edgeInfos[i]->source])->isAssigned(j)==false || STG.ledaGraph.inf(STG._stateName2Node[STG.edgeInfos[i]->target])->isAssigned(j) == false)
+            {
+                // decide which state is not assigned 
+                node unassignedNode; node assignedNode; 
+                if( STG.ledaGraph.inf(STG._stateName2Node[STG.edgeInfos[i]->source])->isAssigned(j) == false )
+                {
+                    unassignedNode = STG._stateName2Node[STG.edgeInfos[i]->source];
+                    assignedNode = STG._stateName2Node[STG.edgeInfos[i]->target];
+                }
+                else
+                {
+                    unassignedNode = STG._stateName2Node[STG.edgeInfos[i]->target];
+                    assignedNode = STG._stateName2Node[STG.edgeInfos[i]->source];
+                }
+                if(haveClassViolation(STG._stateName2Node[STG.edgeInfos[i]->source], STG._stateName2Node[STG.edgeInfos[i]->target], j) == false) // no class violation
+                {
+                    bool x = selectBit(unassignedNode);
+                    STG.ledaGraph.inf(unassignedNode)->stateCode[j] = x + '0';
+                }
+                else
+                {
+                    STG.ledaGraph.inf(unassignedNode)->stateCode[j] = !(bool)(STG.ledaGraph.inf(assignedNode)->stateCode[j] - '0') + '0'; 
+                }
+            }
+        }
+    }
+    printStateCodes();
+}
+
+int State_assigner::calcTEV(bool x, int index)// calculate total edge violation
+{
+    return -1;
+}
+
+
+bool State_assigner::selectBit(node state1) // one parameter
+{
+    int totalEdgeViolation = 0;
+    bool selectedBit = 0;
+    return selectedBit;
+}
+
+
+bool State_assigner::selectBit(node state1, node state2, int index) // two parameter
+{
+    int totalEdgeViolation = 0;
+    bool selectedBit = 0;
+
+    // calculate all incoming edges with these two nodes
+    cout << "Select Bit for " << STG.ledaGraph.inf(state1)->name << " and " << STG.ledaGraph.inf(state2)->name << endl;
+    list<edge> adjEdges = STG.ledaGraph.adj_edges(state1);
+    cout << "All edges related to " << STG.ledaGraph.inf(state1)->name <<" are: "<< endl;
+    for (auto n : adjEdges)
+    {
+        // if(STG.ledaGraph.inf(n)->source == STG.ledaGraph.inf(state2)->name || STG.ledaGraph.inf(n)->target == STG.ledaGraph.inf(state2)->name )
+        if(STG.ledaGraph.inf(STG.ledaGraph.opposite(n, state1))->name == STG.ledaGraph.inf(state2)->name)
+        {
+            cout << "No edge " << STG.ledaGraph.inf(n)->source << \
+            "=== ["<< STG.ledaGraph.inf(n)->weight << "] ===" << STG.ledaGraph.inf(n)->target \
+            <<", since we are considering these two nodes in the same time."<< endl;
+            continue;
+        }
+        else
+        {
+            cout << STG.ledaGraph.inf(n)->source << "=== ["<< STG.ledaGraph.inf(n)->weight << "] ===" << STG.ledaGraph.inf(n)->target << endl;
+            // cout << "TEV of"<< STG.ledaGraph.inf(STG.ledaGraph.opposite(n,state1))->name << " is " << calcTEV(STG.ledaGraph.inf(STG.ledaGraph.opposite(n, state1)),index)<< endl;
+        }
+    }
+    cout << endl << endl;
+    return selectedBit;
+}
+
+std::string State_assigner::getBinaryString(int num) {
+    std::string binary;
+
+    for (int i = _codeLength - 1; i >= 0; --i) {
+        binary += ((num >> i) & 1) ? '1' : '0';
+    }
+
+    return binary;
+}
+
+
+void State_assigner::printStateCodes()
+{
+    cout << "printStatesCode:" << endl;
+    int minBitSize = _codeLength;
+    for (int i = 0; i < STG.nodeInfos.size(); i++)
+    {
+        cout << STG.nodeInfos[i]->name <<"(" << STG.nodeInfos[i]->stateNumber << "):\t" << (STG.nodeInfos[i]->stateCode) << endl;
+    }
+}
+
+void State_assigner::assignStateWithMatching()
+{
+    // perform maximum matching
+    edge e;
+    edge_array<int> weight(STG.ledaGraph);
+    std::cout << "Maximum Weighted Perfect Matching:" << std::endl;
+    int weight_M_max=0;
+    _codeLength = std::ceil(log2(_numStates));// assign the minumum code length for the states
+    forall_edges(e, STG.ledaGraph) 
+    {
+        auto edgeInfo = STG.ledaGraph.inf(e);
+        int sourceID = STG.ledaGraph.inf(STG._stateName2Node[edgeInfo->source])->id ;
+        int targetID = STG.ledaGraph.inf(STG._stateName2Node[edgeInfo->target])->id ;
+        edgeInfo->weight = transitionMatrix[sourceID][targetID];
+        weight[e] = edgeInfo->weight;
+        // cout << "[" << sourceID << "](" << edgeInfo->source << ")\t\t(" << edgeInfo->weight << ")\t\t[" << targetID << "](" <<edgeInfo->target<<")" << endl;          
+    }
+    list<edge> M_max=leda::MAX_WEIGHT_MATCHING(STG.ledaGraph,weight);
+    forall(e,M_max) 
+    {
+        auto edgeInfo = STG.ledaGraph.inf(e);
+        cout << "[" << edgeInfo->source << "]\t(" << edgeInfo->weight << ")\t[" <<edgeInfo->target<<"]" << endl;
+        weight_M_max+=weight[e];
+        STG.ledaGraph.inf(STG._stateName2Node[edgeInfo->source])-> stateNumber = _stateCounter;
+        STG.ledaGraph.inf(STG._stateName2Node[edgeInfo->source])-> stateCode = getBinaryString(_stateCounter);
+        _stateCounter++;
+        STG.ledaGraph.inf(STG._stateName2Node[edgeInfo->target])-> stateNumber = _stateCounter;
+        STG.ledaGraph.inf(STG._stateName2Node[edgeInfo->target])-> stateCode = getBinaryString(_stateCounter);
+        _stateCounter++;
+    }
+    std::cout << "Total Weight: " << weight_M_max << std::endl;
+    for (int i = 0 ; i < STG.nodeInfos.size(); i++) // make sure every state has its code.
+    {
+        if(STG.nodeInfos[i]->stateNumber == -1)
+        {
+            STG.nodeInfos[i]->stateNumber = _stateCounter;
+            STG.nodeInfos[i]->stateCode = getBinaryString(_stateCounter);
+            _stateCounter++;
+        }
+    }
+    printStateCodes();
 }

@@ -7,7 +7,7 @@ using namespace std;
 int main()
 {
     State_assigner SA;
-    std::ifstream infile("./resource/benchmarks/paper_example.kiss");
+    std::ifstream infile("./resource/benchmarks/bbara_opt.kiss");
     if(!infile.is_open()) 
     {
         cerr << "OPEN FAILED!!!" << endl;
@@ -20,7 +20,9 @@ int main()
     SA.printCircuitStatus();
     SA.printTransitionMatrix();
     SA.recomputeMatrix(); // calculate each state probability (not switching probability)
-    SA.setEdgeWeight(); // translate STG to weighted undirected graph (integer type)
+    // SA.setEdgeWeight(); // translate STG to weighted undirected graph (integer type)
+    // SA.assignState();
+    SA.assignStateWithMatching();
     cout << "SA is ok to call!!!" << endl;
     return 0;
 }
