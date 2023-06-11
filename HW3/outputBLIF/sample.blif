@@ -1,0 +1,16 @@
+.start_kiss
+.i 2
+.o 1
+.p 5
+.s 3
+.r S0
+--  S1 S0 1
+11  S0 S1 1
+0-  S0 S2 1
+10  S0 S2 1
+--  S2 S1 1
+.end_kiss
+.code S1 01
+.code S0 00
+.code S2 10
+.end

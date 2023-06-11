@@ -1,0 +1,2 @@
+Combinational power estimation, with Zero delay model.
+Network: dk14_opt.blif, Power = 860.4 uW assuming 20 MHz clock and Vdd = 5V

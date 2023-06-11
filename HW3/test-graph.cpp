@@ -1,52 +1,39 @@
 #include <LEDA/graph/graph.h>
-#include <LEDA/graph/basic_graph_alg.h>
+#include <LEDA/graph/mw_matching.h>
 
 using namespace leda;
+
 int main()
 {
-    GRAPH<string, string> G;
-    node n0,n1,n2,n3,n4,n5,n6;
+  graph G; 
 
-    n0 = G.new_node("A");
-    n1 = G.new_node("B");
-    n2 = G.new_node("C");
-    n3 = G.new_node("D");
-    n4 = G.new_node("E");
-    n5 = G.new_node("F");
-    n6 = G.new_node("G");
+  node n1=G.new_node();
+  node n2=G.new_node(); node n3=G.new_node();
+  node n4=G.new_node(); 
 
-    G.new_edge(n5, n0);
-    G.new_edge(n5, n1);
-    G.new_edge(n5, n2);
-    G.new_edge(n1, n3);
-    G.new_edge(n0, n4);
-    G.new_edge(n4, n6);
+  edge e1=G.new_edge(n1,n2);
+  edge e2=G.new_edge(n2,n3); 
+  edge e3=G.new_edge(n3,n4);
+  edge e4=G.new_edge(n2,n4);
 
-    // DFS
-    node_array<bool> reached(G, false); // DFS expect value false for all nodes.
-    list<node> LN1 =DFS(G,n5,reached); 
-    node v;
-    std::cout << "LN1: "; 
-    forall(v,LN1) 
-    {
-        G.print_node(v);
-    }
-    std::cout << std::endl << std::endl;
+  edge_array<int> weight(G);
+  weight[e1]=6;  weight[e2]=9;  weight[e3]=27;
+  weight[e4]=9;  
+ 
+  list<edge> M_min=MIN_WEIGHT_PERFECT_MATCHING(G,weight);
 
-    //first variant of BFS
-    node_array<int> dist1(G,-1);   
-                        //BFS expects value -1 for all nodes
-    list<node> LN2=BFS(G,n5,dist1); // save the distance between n5 and all nodes
+  std::cout << "Minimum Weighted Perfect Matching:" << std::endl;
+  int weight_M_min=0;
+  edge e;
+  forall(e,M_min) {G.print_edge(e); weight_M_min+=weight[e];}
+  std::cout << " weight: " << weight_M_min << std::endl;
+  
+  list<edge> M_max=MAX_WEIGHT_PERFECT_MATCHING(G,weight);
 
-    forall_nodes(v,G) 
-    {
-        G.print_node(v);
-        std::cout << " dist1[v]=" << dist1[v] << std::endl;
-    }   
-        //dist1[v]=-1 for [4],[6], dist1[v]=0 for [5], 
-        //dist1[v]=1 for [0],[1],[2], dist1[v]=2 for [3]
+  std::cout << "Maximum Weighted Perfect Matching:" << std::endl;
+  int weight_M_max=0;
+  forall(e,M_max) {G.print_edge(e); weight_M_max+=weight[e];}
+  std::cout << " weight: " << weight_M_max << std::endl;
 
-    std::cout << "LN2: ";
-    forall(v,LN2) G.print_node(v);
-    std::cout << std::endl << std::endl; // prints LN2: [5][0][1][2][4][3][6]
+  return 0;
 }

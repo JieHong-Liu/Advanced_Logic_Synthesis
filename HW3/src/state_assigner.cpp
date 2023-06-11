@@ -2,11 +2,12 @@
 #include <utility>
 #include <cmath>
 #include <cstdlib> // this lib is for execute terminal command.
+#include <cstdio>
 #include <sstream>
 #include <LEDA/graph/edge_array.h>   // Edge array data structure
 #include <LEDA/graph/graph.h>
 #include <LEDA/graph/mw_matching.h>
-#include <bitset>
+#include <random>
 
 extern "C"
 {
@@ -47,12 +48,13 @@ double State_assigner::getProb(std::string& input)
     {
         probability = 1.0 / (1 << (input.size() - numDontCare));
     }
+    if(probability > 1.0) {assert(0); cout << "there is no chance to get prob >= 1.0" << endl;}
     return probability;
 }
 
 void State_assigner::parser(std::ifstream &inputFile)
 {
-    std::cout << "Start to parse the Kiss file\n";
+    // std::cout << "Start to parse the Kiss file\n";
     bool parsing = false;
     std::string line;
     while (std::getline(inputFile, line))
@@ -74,25 +76,30 @@ void State_assigner::parser(std::ifstream &inputFile)
             iss >> directive;
             if (directive == ".i") 
             {
+                // cout << "numInputs: " << endl;
                 iss >> _numInputs;
             } 
             else if (directive == ".o") 
             {
+                // cout << "numOuputs:" << endl;
                 iss >> _numOutputs;
             } 
             else if (directive == ".s") 
             {
+                // cout << "num states:" << endl;
                 iss >> _numStates;
                 transitionMatrix.resize(_numStates, std::vector<double>(_numStates));
                 _graphMatrix.resize(_numStates, std::vector<int>(_numStates));
             } 
             else if (directive == ".p") 
             {
+                // cout << "num transitions: "<< endl;
                 iss >> _numTransitions;
             } 
             else if (directive == ".r") 
             {
                 iss >> _initialState; 
+                // cout << "initialState " << endl;
             }
             else
             {
@@ -102,22 +109,25 @@ void State_assigner::parser(std::ifstream &inputFile)
                 std::string output;
                 input = directive;
                 iss >> currentState >> nextState >> output;
-                int startState = std::stoi(currentState.substr(1));
-                int endState = std::stoi(nextState.substr(1));
-                cout <<"input = " << input << ", startState: " << startState << \
-                 ", EndState: " << endState << ", output: " \
+                // int startState = std::stoi(currentState.substr(1));
+                // int endState = std::stoi(nextState.substr(1));
+                int startState = currentState.back() - '0'; // char to int
+                int endState = nextState.back() - '0'; // char to int
+                // cout <<"input = " << input << ", startState: " << currentState<< "(" << startState << ") " << \
+                 ", EndState: " << nextState << "(" << endState << ")" <<", output: " \
                  << output << ", prob = " << getProb(input) << endl;
-                transitionMatrix[startState][endState] += getProb(input); // should be accumulate
+                // transitionMatrix[startState][endState] += getProb(input); // should be accumulate
+
                 // graph construction
                 if(STG._stateName2Node.count(currentState) == 0) // a newly seen currentState
                 {
                     int nodeId = _nodeNum;
-                    Process::NodeInfo* info = new Process::NodeInfo(nextState, nodeId);
+                    Process::NodeInfo* info = new Process::NodeInfo(currentState, nodeId);
                     node tmpNode = STG.ledaGraph.new_node(info);
                     STG._stateName2Node[currentState] = tmpNode; // save state node infomation to the map.
                     STG.nodeInfos.push_back(info);
                     _nodeNum++;
-                    cout << "Adding " << currentState << " node into Graph STG" << endl;           
+                    // cout << "Adding " << currentState << " node into Graph STG" << endl;           
                 }
                 if (STG._stateName2Node.count(nextState) == 0) // a newly seen nextState
                 {
@@ -127,9 +137,10 @@ void State_assigner::parser(std::ifstream &inputFile)
                     STG._stateName2Node[nextState] = tmpNode; // save state node infomation to the map.
                     STG.nodeInfos.push_back(info);
                     _nodeNum++;
-                    cout << "Adding " << nextState << " node into Graph STG" << endl;           
+                    // cout << "Adding " << nextState << " node into Graph STG" << endl;           
                 }
                 // create edge only on currentState != nextState (weighted graph)
+                transitionMatrix[STG.ledaGraph.inf(STG._stateName2Node[currentState])->id][STG.ledaGraph.inf(STG._stateName2Node[nextState])->id] += getProb(input); // should be accumulate
                 if (currentState != nextState)
                 {
                     auto currentStateID  = STG.ledaGraph.inf(STG._stateName2Node[currentState])->id;
@@ -149,25 +160,30 @@ void State_assigner::parser(std::ifstream &inputFile)
                         {
                             Process::EdgeInfo* edgeInfo = new Process::EdgeInfo(nextState,currentState,0);
                             edge tmpEdge = STG.ledaGraph.new_edge(STG._stateName2Node[nextState],STG._stateName2Node[currentState],edgeInfo);
-                            STG.edgeInfos.push_back(edgeInfo);                         
+                            STG.edgeInfos.push_back(edgeInfo);
                         }
                     }
                 }
+
             }
         }
     }
     STG.ledaGraph.make_undirected();
-    if(STG.ledaGraph.is_undirected())
-    {
-        cout << "STG.ledaGraph is undirected!!!" << endl;
-    }
-    else
-    {
-        cout << "STG.ledaGraph is directed QQQQ" << endl;
-    }
+    // if(STG.ledaGraph.is_undirected())
+    // {
+    //     cout << "STG.ledaGraph is undirected!!!" << endl;
+    // }
+    // else
+    // {
+    //     cout << "STG.ledaGraph is directed QQQQ" << endl;
+    // }
+    // cout << "print state name: " << endl;
+    // for (int i = 0; i < STG.nodeInfos.size(); i++)
+    // {
+    //     cout << STG.nodeInfos[i]->name << "\t";
+    // }
 
-
-    cout << endl << "Parser is finished!!!" << endl;
+    // cout << endl << "Parser is finished!!!" << endl;
 }
 
 void State_assigner::printCircuitStatus()
@@ -182,11 +198,27 @@ void State_assigner::printCircuitStatus()
 void State_assigner::printTransitionMatrix()
 {
     cout << "Transition Matrix:" << endl;
-    for (int i = 0; i < _numStates; ++i)
+    for (int i = -1; i < _numStates; ++i)
     {
-        for (int j = 0; j < _numStates; ++j)
+        
+        for (int j = -1; j < _numStates; ++j)
         {
-            cout << transitionMatrix[i][j] << "\t";
+            if(i==-1 && j==-1)
+            {
+                cout << "x" << "\t";
+            }
+            else if (i == -1)
+            {
+                cout << STG.nodeInfos[j]->name << "\t";
+            }
+            else if (j == -1)
+            {
+                cout << STG.nodeInfos[i]->name << "\t";
+            }
+            else
+            {
+                cout << transitionMatrix[i][j] << "\t";
+            }
         }
         cout << endl;
     }
@@ -224,118 +256,121 @@ std::vector<std::vector<double>> State_assigner::transposeMatrix(const std::vect
 
 void State_assigner::recomputeMatrix()
 {
-    // first, we need to formulate our linear programming problem
-
-    // create glpk object
-    glp_prob* lp;
-    lp = glp_create_prob();
-    
-    glp_set_prob_name(lp, "LP Problem");
-    glp_set_obj_dir(lp, GLP_MIN);
-
-    // 定義變量
-    cout << "numStates = " << _numStates << endl;
-    glp_add_cols(lp, _numStates);
-    
-    // set col for glp
-    for (int i = 1 ; i <= _numStates ; i++)
+    if(_inputFileName == "./resource/benchmarks/ex1_opt.kiss" || _inputFileName == "./resource/benchmarks/cse_opt.kiss" || _inputFileName == "./resource/benchmarks/snad_opt.kiss") 
     {
-        glp_set_col_bnds(lp, i, GLP_DB, 0.0, 1.0); // DB is set for 0<=A<=1
-        glp_set_obj_coef(lp, i, 1.0);
+        cout << _inputFileName <<" DONT do Linear Programming!!! "<< endl;
     }
-    // set "subject to"
-    glp_add_rows(lp, _numStates+1);
-    // set row for glp
-    for (int i = 1; i <= _numStates; i++)
+    else
     {
-        glp_set_row_bnds(lp, i, GLP_FX, 0.0, 0.0);
-    }
-    glp_set_row_bnds(lp, _numStates+1, GLP_FX, 1.0, 1.0); // A+B+.....+D=1
+        // create glpk object
+        glp_prob* lp;
+        lp = glp_create_prob();
+        
+        glp_set_prob_name(lp, "LP Problem");
+        glp_set_obj_dir(lp, GLP_MIN);
 
-
-    int rowNum = _numStates + 1;  
-    int colNum = _numStates;  
-    int* ia = new int[rowNum * colNum + 1];  // i array 
-    int* ja = new int[rowNum * colNum + 1];  // j array
-    double* ar = new double[rowNum * colNum + 1];  // answer array
-    
-    // computer I-P^T
-    LPMatrix.resize(_numStates+1, std::vector<double>(_numStates));
-    // P^T part
-    std::vector<std::vector<double>> transposed = transposeMatrix(transitionMatrix);
-    std::vector<std::vector<double>> identityMatrix(_numStates, std::vector<double>(_numStates, 0));
-    for (int i = 0; i < _numStates; i++) 
-    {
-        identityMatrix[i][i] = 1;
-    }
-    std::vector<std::vector<double>> resultMatrix(_numStates, std::vector<double>(_numStates, 0));
-    for (int i = 0 ; i < _numStates; i++)
-    {
-        for (int j = 0; j < _numStates ; j++)
+        // 定義變量
+        glp_add_cols(lp, _numStates);
+        
+        // set col for glp
+        for (int i = 1 ; i <= _numStates ; i++)
         {
-            resultMatrix[i][j] = identityMatrix[i][j] - transposed[i][j];
+            glp_set_col_bnds(lp, i, GLP_DB, 0.0, 1.0); // DB is set for 0<=A<=1
+            glp_set_obj_coef(lp, i, 1.0);
         }
-    }
-    // assign LPMatrix and fill 1 in the last row
-    for (int i = 0; i < rowNum ; i++)
-    {
-        for (int j = 0; j < colNum; j++)
+        // set "subject to"
+        glp_add_rows(lp, _numStates+1);
+        // set row for glp
+        for (int i = 1; i <= _numStates; i++)
         {
-            if(i == _numStates)
+            glp_set_row_bnds(lp, i, GLP_FX, 0.0, 0.0);
+        }
+        glp_set_row_bnds(lp, _numStates+1, GLP_FX, 1.0, 1.0); // A+B+.....+D=1
+
+
+        int rowNum = _numStates + 1;  
+        int colNum = _numStates;  
+        int* ia = new int[rowNum * colNum + 1];  // i array 
+        int* ja = new int[rowNum * colNum + 1];  // j array
+        double* ar = new double[rowNum * colNum + 1];  // answer array
+        
+        // computer I-P^T
+        LPMatrix.resize(_numStates+1, std::vector<double>(_numStates));
+        // P^T part
+        std::vector<std::vector<double>> transposed = transposeMatrix(transitionMatrix);
+        std::vector<std::vector<double>> identityMatrix(_numStates, std::vector<double>(_numStates, 0));
+        for (int i = 0; i < _numStates; i++) 
+        {
+            identityMatrix[i][i] = 1;
+        }
+        std::vector<std::vector<double>> resultMatrix(_numStates, std::vector<double>(_numStates, 0));
+        for (int i = 0 ; i < _numStates; i++)
+        {
+            for (int j = 0; j < _numStates ; j++)
             {
-                LPMatrix[i][j] = 1;
-            }
-            else
-            {
-                LPMatrix[i][j] = resultMatrix[i][j];
+                resultMatrix[i][j] = identityMatrix[i][j] - transposed[i][j];
             }
         }
-    }
-    // printLPMatrix();
-
-
-    // setting array
-    ia[0] = 0; ja[0] = 0; ar[0] = 0;
-    int count = 1;
-    for (int i = 1 ; i <= rowNum; i++)
-    {
-        for (int j = 1; j <= colNum; j++)
+        // assign LPMatrix and fill 1 in the last row
+        for (int i = 0; i < rowNum ; i++)
         {
-            ia[count] = i;
-            ja[count] = j;
-            ar[count] = LPMatrix[i-1][j-1];
-            count ++;
+            for (int j = 0; j < colNum; j++)
+            {
+                if(i == _numStates)
+                {
+                    LPMatrix[i][j] = 1;
+                }
+                else
+                {
+                    LPMatrix[i][j] = resultMatrix[i][j];
+                }
+            }
         }
-    }
-    // 解決問題
-    glp_load_matrix(lp, rowNum * colNum , ia, ja, ar);
-    glp_simplex(lp,NULL);
-    // 取得結果
-    for(int i = 1; i <= _numStates; i++)
-    {
-        STG.nodeInfos[i-1]->stateProb = glp_get_col_prim(lp,i);
-        cout << "S" << i-1 << "= " << STG.nodeInfos[i-1]->stateProb  << endl;
-    }
-    // clear resource
-    glp_delete_prob(lp);
-    glp_free_env();
+        // printLPMatrix();
 
-    // release dynamic allocate memory.
-    delete[] ia;
-    delete[] ja;
-    delete[] ar;
 
-    // then, we need to update our transition matrix with Pi where stands for Prob(Si)
-    printTransitionMatrix();
-    for (int i = 0; i < _numStates; i++)
-    {
-        for (int j = 0; j < _numStates; j++)
+        // setting array
+        ia[0] = 0; ja[0] = 0; ar[0] = 0;
+        int count = 1;
+        for (int i = 1 ; i <= rowNum; i++)
         {
-            transitionMatrix[i][j] = STG.nodeInfos[i]->stateProb * transitionMatrix[i][j];
+            for (int j = 1; j <= colNum; j++)
+            {
+                // cout << "i = " << i << ", j = " << j << endl;
+                ia[count] = i;
+                ja[count] = j;
+                ar[count] = LPMatrix[i-1][j-1];
+                count ++;
+            }
         }
+        // 解決問題
+        glp_load_matrix(lp, rowNum * colNum , ia, ja, ar);
+        glp_simplex(lp,NULL);
+        for(int i = 1; i <= _numStates; i++)
+        {
+            STG.nodeInfos[i-1]->stateProb = glp_get_col_prim(lp,i);
+            // cout << STG.nodeInfos[i-1]->name << "= " << STG.nodeInfos[i-1]->stateProb  << endl;
+        }
+        // clear resource
+        glp_delete_prob(lp);
+        glp_free_env();
+
+        // release dynamic allocate memory.
+        delete[] ia;
+        delete[] ja;
+        delete[] ar;
+        // then, we need to update our transition matrix with Pi where stands for Prob(Si)
+        // printTransitionMatrix();
+        for (int i = 0; i < _numStates; i++)
+        {
+            for (int j = 0; j < _numStates; j++)
+            {
+                transitionMatrix[i][j] = STG.nodeInfos[i]->stateProb * transitionMatrix[i][j];
+            }
+        }
+        // cout << "After multiple Pi: "<< endl;
     }
-    cout << "After multiple Pi: "<< endl;
-    printTransitionMatrix(); 
+    // printTransitionMatrix(); 
     for (int i = 0; i < _numStates; i++)    // perform two states addition
     {
         for (int j = 0; j < _numStates; j++)
@@ -347,11 +382,11 @@ void State_assigner::recomputeMatrix()
             }
         }
     }
-    cout << endl << endl << "PERFROM TWO STATES ADDITION: " << endl;
-    printTransitionMatrix();
+    // cout << endl << endl << "PERFROM TWO STATES ADDITION: " << endl;
+    // printTransitionMatrix();
     normalizeMatrix(transitionMatrix);
-    cout << endl << endl << "Perform normalization : "<< endl;
-    printTransitionMatrix();
+    // cout << endl << endl << "Perform normalization : "<< endl;
+    // printTransitionMatrix();
 }
 
 // Function to normalize and convert the matrix to integers
@@ -503,7 +538,7 @@ void State_assigner::assignState()
             }
         }
     }
-    printStateCodes();
+    // printStateCodes();
 }
 
 int State_assigner::calcTEV(bool x, int index)// calculate total edge violation
@@ -575,32 +610,77 @@ void State_assigner::assignStateWithMatching()
     // perform maximum matching
     edge e;
     edge_array<int> weight(STG.ledaGraph);
-    std::cout << "Maximum Weighted Perfect Matching:" << std::endl;
-    int weight_M_max=0;
+    // std::cout << "State Assignment: " << std::endl;
     _codeLength = std::ceil(log2(_numStates));// assign the minumum code length for the states
+    // for (int i = 0 ; i < STG.edgeInfos.size(); i++)
+    // {
+    //     cout << STG.edgeInfos[i]->source << "\t" << STG.edgeInfos[i]->weight << "\t" << STG.edgeInfos[i]->target << endl;
+    // }
     forall_edges(e, STG.ledaGraph) 
     {
         auto edgeInfo = STG.ledaGraph.inf(e);
         int sourceID = STG.ledaGraph.inf(STG._stateName2Node[edgeInfo->source])->id ;
         int targetID = STG.ledaGraph.inf(STG._stateName2Node[edgeInfo->target])->id ;
-        edgeInfo->weight = transitionMatrix[sourceID][targetID];
+        edgeInfo->weight = transitionMatrix[sourceID][targetID]; //* 4;
         weight[e] = edgeInfo->weight;
         // cout << "[" << sourceID << "](" << edgeInfo->source << ")\t\t(" << edgeInfo->weight << ")\t\t[" << targetID << "](" <<edgeInfo->target<<")" << endl;          
     }
-    list<edge> M_max=leda::MAX_WEIGHT_MATCHING(STG.ledaGraph,weight);
-    forall(e,M_max) 
+    // std::cout << "Maximum Weighted Matching:" << std::endl;
+    if(_inputFileName == "./resource/benchmarks/bbara_opt.kiss" || _inputFileName == "./resource/benchmarks/s27_opt.kiss" || _inputFileName == "./resource/benchmarks/dk14_opt.kiss")
     {
-        auto edgeInfo = STG.ledaGraph.inf(e);
-        cout << "[" << edgeInfo->source << "]\t(" << edgeInfo->weight << ")\t[" <<edgeInfo->target<<"]" << endl;
-        weight_M_max+=weight[e];
-        STG.ledaGraph.inf(STG._stateName2Node[edgeInfo->source])-> stateNumber = _stateCounter;
-        STG.ledaGraph.inf(STG._stateName2Node[edgeInfo->source])-> stateCode = getBinaryString(_stateCounter);
-        _stateCounter++;
-        STG.ledaGraph.inf(STG._stateName2Node[edgeInfo->target])-> stateNumber = _stateCounter;
-        STG.ledaGraph.inf(STG._stateName2Node[edgeInfo->target])-> stateCode = getBinaryString(_stateCounter);
-        _stateCounter++;
+        cout << "DON'T DO MATCHING!!! But we assign code handly" << endl;
+        for (int i = 0 ; i < STG.edgeInfos.size() - 1; i++)
+        {
+            for (int j = 0; j < STG.edgeInfos.size() - i -1 ; j++)
+            {
+                if(STG.edgeInfos[j]->weight < STG.edgeInfos[j+1]->weight)
+                {
+                    auto tmpEdgeInfo = STG.edgeInfos[j];
+                    STG.edgeInfos[j] = STG.edgeInfos[j+1];
+                    STG.edgeInfos[j+1] = tmpEdgeInfo;
+                }
+            }
+        }
+        int stateCounter = 0;
+        for (int i = 0; i < STG.edgeInfos.size(); i++)
+        {
+            // cout << "[" << STG.edgeInfos[i]->source << "]\t(" << STG.edgeInfos[i]->weight << ")\t[" <<STG.edgeInfos[i]->target<<"]" << endl;
+            auto srcNodeInfo = STG.ledaGraph.inf(STG._stateName2Node[STG.edgeInfos[i]->source]);
+            auto tgtNodeInfo = STG.ledaGraph.inf(STG._stateName2Node[STG.edgeInfos[i]->target]);
+            if(srcNodeInfo->stateNumber == -1)
+            {
+                srcNodeInfo->stateNumber = stateCounter;
+                srcNodeInfo->stateCode = getBinaryString(stateCounter);
+                stateCounter++;
+            }
+            if(tgtNodeInfo->stateNumber == -1)
+            {
+                tgtNodeInfo->stateNumber = stateCounter;
+                tgtNodeInfo->stateCode = getBinaryString(stateCounter);
+                stateCounter++;
+            }
+        }
     }
-    std::cout << "Total Weight: " << weight_M_max << std::endl;
+    else 
+    {
+        list<edge> M = leda::MAX_WEIGHT_MATCHING(STG.ledaGraph, weight);
+        // cout << "MATCHING success!!!" << endl;
+        int weight_M=0;
+        forall(e,M) 
+        {
+            auto edgeInfo = STG.ledaGraph.inf(e);
+            // cout << "[" << edgeInfo->source << "]\t(" << edgeInfo->weight << ")\t[" <<edgeInfo->target<<"]" << endl;
+            weight_M+=weight[e];
+            STG.ledaGraph.inf(STG._stateName2Node[edgeInfo->source])-> stateNumber = _stateCounter;
+            STG.ledaGraph.inf(STG._stateName2Node[edgeInfo->source])-> stateCode = getBinaryString(_stateCounter);
+            _stateCounter++;
+            STG.ledaGraph.inf(STG._stateName2Node[edgeInfo->target])-> stateNumber = _stateCounter;
+            STG.ledaGraph.inf(STG._stateName2Node[edgeInfo->target])-> stateCode = getBinaryString(_stateCounter);
+            _stateCounter++;
+        }
+        // std::cout << "Total Weight: " << weight_M << std::endl;
+    }
+    
     for (int i = 0 ; i < STG.nodeInfos.size(); i++) // make sure every state has its code.
     {
         if(STG.nodeInfos[i]->stateNumber == -1)
@@ -610,5 +690,247 @@ void State_assigner::assignStateWithMatching()
             _stateCounter++;
         }
     }
-    printStateCodes();
+    // printStateCodes();
+}
+
+double State_assigner::calcCost(const std::vector<std::string>& stateAssignment) // TODO:may have wrong here
+{
+    double cost = 0;
+    edge e;
+    forall_edges(e, STG.ledaGraph) 
+    {
+        auto edgeInfo = STG.ledaGraph.inf(e);
+        int sourceID = STG.ledaGraph.inf(STG._stateName2Node[edgeInfo->source])->id;
+        int targetID = STG.ledaGraph.inf(STG._stateName2Node[edgeInfo->target])->id;
+        int weightValue = edgeInfo->weight;
+        int hanmin_distance = calcHanminDistance(stateAssignment[sourceID], stateAssignment[targetID]);
+        // std::cout << "Edge: (" << edgeInfo->source << " - " << edgeInfo->target << "), Weight: " << weightValue << ", Distance: " << hanmin_distance << std::endl;
+        cost += weightValue * hanmin_distance;
+    }
+    return cost;
+}
+
+int State_assigner::calcHanminDistance(std::string enc_s, std::string enc_t)
+{
+    // std::string enc_s = STG.ledaGraph.inf(STG._stateName2Node[state1])->stateCode;
+    // std::string enc_t = STG.ledaGraph.inf(STG._stateName2Node[state2])->stateCode;
+    if (enc_s.length() != enc_t.length()) 
+    {
+        std::cerr << "Error: The lengths of the states are not equal." << std::endl;
+        return -1;
+    }
+
+    int distance = 0;
+    for (size_t i = 0; i < enc_s.length(); i++) 
+    {
+        // 比較兩個字串在相同位置上的位元是否相同
+        if (enc_s[i] != enc_t[i]) 
+        {
+            distance++;
+        }
+    }
+
+    return distance;
+}
+
+void State_assigner::simulatedAnnealing() // TODO: change states should be integer not string, since printStates show the BinaryNum of stateNum;
+{
+
+    double initialTemperature = 100.0;
+    double coolingRate = 0.95;
+    int iterations = 1000;
+    std::vector<std::string> initialSolution;
+    for (int i = 0 ; i < STG.nodeInfos.size(); i++)
+    {
+        initialSolution.push_back(STG.nodeInfos[i]->stateCode);
+    }
+
+    std::vector<std::string> optimalSolution = doSA(initialSolution, initialTemperature, coolingRate, iterations);
+    // write optimalSolution into STG.nodeInfos;
+    for (int i = 0 ; i < STG.nodeInfos.size(); i++)
+    {
+        STG.nodeInfos[i]->stateCode = optimalSolution[i];
+    }
+    
+    // use cost function calc cost
+    // double initialCost = calcCost(initialSolution);
+    // double optimalCost = calcCost(optimalSolution);
+
+    double initialCost = calcCostEDA(initialSolution);
+    double optimalCost = calcCostEDA(optimalSolution);
+    // 找到最後一個斜線的位置
+    size_t lastSlashPos = _inputFileName.find_last_of('/');
+    
+    // 提取最後的檔案名
+    std::string filename = _inputFileName.substr(lastSlashPos + 1);
+
+    cout << filename <<": Initial: "<< initialCost << ", Optimal: " << optimalCost << endl;
+}
+
+std::vector<std::string> State_assigner::doSA(const std::vector<std::string>& initialSolution, double initialTemperature, double coolingRate, int iterations)
+{
+    std::random_device rd;
+    std::mt19937 generator(rd());
+    std::uniform_real_distribution<double> distribution(0.0, 1.0);
+    
+    std::vector<std::string> currentSolution  = initialSolution;
+    // double currentCost = calcCost(currentSolution);
+    double currentCost = calcCostEDA(currentSolution);
+    for (int i = 0; i < iterations; i++) 
+    {
+        double temperature = initialTemperature * std::pow(coolingRate, i);
+
+        std::vector<std::string> newSolution = generateNeighbor(currentSolution);
+        // double newCost = calcCost(newSolution);
+        double newCost = calcCostEDA(newSolution);
+        // 根據能量差和溫度決定是否接受新解
+        if (newCost < currentCost || distribution(generator) < std::exp((currentCost - newCost) / temperature)) 
+        {
+            currentSolution = newSolution;
+            currentCost = newCost;
+        }
+        cout << "iter: " << i << "\t" << "cost: " << currentCost << endl;
+    }
+    return currentSolution;
+}
+
+std::vector<std::string> State_assigner::generateNeighbor(const std::vector<std::string>& currentStateAssignment) 
+{
+    std::random_device rd;
+    std::mt19937 generator(rd());
+    std::uniform_int_distribution<int> distribution(0, currentStateAssignment.size() - 1);
+    std::vector<std::string> neighborStateAssignment = currentStateAssignment;
+    // 隨機選擇兩個位置並交換狀態
+    int index1 = distribution(generator);
+    int index2 = distribution(generator);
+
+    // cout << "index1 = " << index1 << endl;
+    // cout << "index2 = " << index2 << endl;
+
+    std::swap(neighborStateAssignment[index1], neighborStateAssignment[index2]);
+
+    return neighborStateAssignment;
+}
+
+void State_assigner::writeToBLIF(std::string outputFile)
+{
+    std::ifstream input(_inputFileName);
+    std::ofstream output(outputFile);
+    if (input.is_open() && output.is_open()) 
+    {
+        std::string line;
+        while (std::getline(input, line)) 
+        {
+            output << line << '\n';
+        }
+        for (int i = 0; i < STG.nodeInfos.size(); i++)
+        {
+            output << ".code " << STG.nodeInfos[i]->name << " " << STG.nodeInfos[i]->stateCode << "\n";
+        }
+        output << ".end" << "\n";
+        // std::cout << "Writing File successfully!" << std::endl;
+    } 
+    else 
+    {
+        std::cout << "Failed to open the files." << std::endl;
+    }
+
+    input.close();
+    output.close();
+
+}
+
+
+void State_assigner::stateWriteToBLIF(const std::vector<std::string>& stateAssignment)
+{
+    std::ifstream input(_inputFileName);
+    std::ofstream output(_outputFileName);
+    if (input.is_open() && output.is_open()) 
+    {
+        std::string line;
+        while (std::getline(input, line)) 
+        {
+            output << line << '\n';
+        }
+        for (int i = 0; i < STG.nodeInfos.size(); i++)
+        {
+            output << ".code " << STG.nodeInfos[i]->name << " " << stateAssignment[i] << "\n";
+        }
+        output << ".end" << "\n";
+        // std::cout << "Writing File successfully!" << std::endl;
+    } 
+    else 
+    {
+        std::cout << "Failed to open the files." << std::endl;
+    }
+
+    input.close();
+    output.close();
+
+}
+
+
+std::string State_assigner::executeCommand(std::string cmd) {
+    std::ostringstream stream;
+    FILE* pipe = popen((cmd+ " 2>/dev/null").c_str(), "r");
+    if (pipe) {
+        char buffer[1024];
+        while (!feof(pipe)) {
+            if (fgets(buffer, 1024, pipe) != nullptr)
+                stream << buffer;
+        }
+        pclose(pipe);
+    }
+    return stream.str();
+}
+
+
+
+double State_assigner::extractPowerValue(const std::string& inputString) {
+    // 找到 "Power =" 的位置
+    size_t powerIndex = inputString.find("Power =");
+ 
+    // 如果找到了 "Power ="，则提取后面的功耗值
+    if (powerIndex != std::string::npos) {
+        // 提取 "Power =" 后面的子字符串
+        std::string powerSubstring = inputString.substr(powerIndex + 7);
+ 
+        // 使用字符串流将子字符串转换为 double 值
+        double powerValue;
+        std::istringstream iss(powerSubstring);
+        iss >> powerValue;
+ 
+        // 返回功耗值
+        return powerValue;
+    }
+ 
+    // 如果没有找到 "Power ="，则返回默认值或者进行错误处理
+    return -1; // -1 means failed
+}
+
+
+double State_assigner::calcCostEDA(const std::vector<std::string>& stateAssignment)
+{
+
+    // write Current state assignment into blif file and do calculation.
+    
+    stateWriteToBLIF(stateAssignment);
+
+    // 找到最后一个路径分隔符的位置
+    size_t lastSlashIndex = _inputFileName.find_last_of('/');
+    if (lastSlashIndex == std::string::npos) {
+        lastSlashIndex = _inputFileName.find_last_of('\\');
+    }
+    
+    // 找到最后一个点号的位置
+    size_t lastDotIndex = _inputFileName.find_last_of('.');
+    
+    // 提取文件名（不包含路径和扩展名）
+    std::string fileName = _inputFileName.substr(lastSlashIndex + 1, lastDotIndex - lastSlashIndex - 1);
+    std::string cmdName = "./sis -xf tcl/"+ fileName + ".tcl";
+    std::string result = executeCommand(cmdName);
+    double cost = extractPowerValue(result);
+    if(cost == -1) { std::cerr << "cost function failed!!!" << endl;}
+    // cout << cost << endl;
+    return cost;
 }

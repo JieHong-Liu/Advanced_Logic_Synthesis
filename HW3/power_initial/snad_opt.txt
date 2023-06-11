@@ -1,0 +1,2 @@
+Combinational power estimation, with Zero delay model.
+Network: snad_opt.blif, Power = 6263.9 uW assuming 20 MHz clock and Vdd = 5V

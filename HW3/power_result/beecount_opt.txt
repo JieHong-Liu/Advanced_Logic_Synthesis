@@ -1,0 +1,2 @@
+Combinational power estimation, with Zero delay model.
+Network: beecount_opt.blif, Power = 303.5 uW assuming 20 MHz clock and Vdd = 5V

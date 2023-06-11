@@ -1,0 +1,2 @@
+Combinational power estimation, with Zero delay model.
+Network: bbsse_opt.blif, Power = 890.3 uW assuming 20 MHz clock and Vdd = 5V

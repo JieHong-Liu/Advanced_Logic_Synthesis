@@ -1,0 +1,2 @@
+Combinational power estimation, with Zero delay model.
+Network: ex1_opt.blif, Power = 3062.6 uW assuming 20 MHz clock and Vdd = 5V
