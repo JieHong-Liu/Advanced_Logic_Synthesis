@@ -1,0 +1,10 @@
+./sis -xf tcl/s27_opt.tcl > ./power_initial/s27_opt.txt
+./sis -xf tcl/dk14_opt.tcl > ./power_initial/dk14_opt.txt
+./sis -xf tcl/ex1_opt.tcl > ./power_initial/ex1_opt.txt
+./sis -xf tcl/bbsse_opt.tcl > ./power_initial/bbsse_opt.txt
+./sis -xf tcl/cse_opt.tcl > ./power_initial/cse_opt.txt
+./sis -xf tcl/bbara_opt.tcl > ./power_initial/bbara_opt.txt
+./sis -xf tcl/beecount_opt.tcl > ./power_initial/beecount_opt.txt
+./sis -xf tcl/bbtas_opt.tcl > ./power_initial/bbtas_opt.txt
+./sis -xf tcl/dk16_opt.tcl > ./power_initial/dk16_opt.txt
+./sis -xf tcl/snad_opt.tcl > ./power_initial/snad_opt.txt

@@ -5,20 +5,22 @@ def list_files_in_directory(directory):
         if(filename == "testcase.tar.gz"):
             pass
         filepath = os.path.join(directory, filename)
-        inputFolder = './resource/benchmarks/'
-        outputFolder = './outputBLIF/'
+        inputFolder = './outputBLIF/'
+        # outputFolder = './outputBLIF/'
+        outputFolder = './tcl'
         # powerFolder = './power_result/'
         powerFolder = './power_initial/'
         if os.path.isfile(filepath):
-            outputFile = filename.split('.')[0] + ".blif"
-            outputStr = "./bin/sa " + inputFolder + filename + ' ' + outputFolder + outputFile + "\n"
-            outputStr += "./sis -xf tcl/" + filename.split('.')[0]+ ".tcl > " + powerFolder + filename.split('.')[0] + ".txt" 
-            writeTCL(outputFolder + outputFile,filename.split('.')[0]+".tcl")
-            print(outputStr)
+            # outputFile = filename.split('.')[0] + ".blif"
+            # outputStr = "./bin/sa " + inputFolder + filename + ' ' + outputFolder + outputFile + "\n"
+            # outputStr = "./sis -xf tcl/" + filename.split('.')[0]+ ".tcl > " + powerFolder + filename.split('.')[0] + ".txt" 
+            writeTCL(inputFolder + filename.split('.')[0]+".blif" ,filename.split('.')[0]+".tcl")
+            # print(outputStr)
 
 def writeTCL(blifName, outputTCL):
     with open ('tcl/'+outputTCL, 'w') as f:
         tcl_pattern = 'read_blif ' + blifName + '\n'
+        # tcl_pattern += 'state_assign' + '\n'
         tcl_pattern += 'source ./resource/sis_script/opt_map_power.scr' + '\n'
         f.write(tcl_pattern)
 

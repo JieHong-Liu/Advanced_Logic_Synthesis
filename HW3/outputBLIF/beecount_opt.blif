@@ -25,8 +25,8 @@
 110 S2 S1 0101
 --1 S2 S2 1010
 .end_kiss
-.code S0 10
-.code S3 01
+.code S0 01
+.code S3 10
 .code S2 00
 .code S1 11
 .end

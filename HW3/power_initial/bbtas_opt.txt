@@ -1,2 +1,3 @@
+Running nova, written by Tiziano Villa,  UC Berkeley
 Combinational power estimation, with Zero delay model.
-Network: bbtas_opt.blif, Power = 264.0 uW assuming 20 MHz clock and Vdd = 5V
+Network: bbtas_opt.kiss, Power = 224.0 uW assuming 20 MHz clock and Vdd = 5V

@@ -48,10 +48,10 @@
 1011 S6 S6 01
 .end_kiss
 .code S0 000
-.code S2 100
-.code S1 001
-.code S4 010
-.code S3 101
-.code S5 011
-.code S6 110
+.code S2 010
+.code S1 100
+.code S4 110
+.code S3 001
+.code S5 101
+.code S6 011
 .end

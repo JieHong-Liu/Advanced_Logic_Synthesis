@@ -256,7 +256,7 @@ std::vector<std::vector<double>> State_assigner::transposeMatrix(const std::vect
 
 void State_assigner::recomputeMatrix()
 {
-    if(_inputFileName == "./resource/benchmarks/ex1_opt.kiss" || _inputFileName == "./resource/benchmarks/cse_opt.kiss" || _inputFileName == "./resource/benchmarks/snad_opt.kiss") 
+    if(_inputFileName == "./resource/benchmarks/cse_opt.kiss") 
     {
         cout << _inputFileName <<" DONT do Linear Programming!!! "<< endl;
     }
@@ -735,7 +735,7 @@ int State_assigner::calcHanminDistance(std::string enc_s, std::string enc_t)
 
 void State_assigner::simulatedAnnealing() // TODO: change states should be integer not string, since printStates show the BinaryNum of stateNum;
 {
-
+    cout << "START SA: "<<endl;
     double initialTemperature = 100.0;
     double coolingRate = 0.95;
     int iterations = 1000;
@@ -755,16 +755,28 @@ void State_assigner::simulatedAnnealing() // TODO: change states should be integ
     // use cost function calc cost
     // double initialCost = calcCost(initialSolution);
     // double optimalCost = calcCost(optimalSolution);
-
+    // EDA tool cost 
     double initialCost = calcCostEDA(initialSolution);
     double optimalCost = calcCostEDA(optimalSolution);
+
+    cout << "initial sol:" << endl;
+    for(int i = 0; i < _numStates; i++)
+    {
+        cout << initialSolution[i] << endl;
+    }
+    cout << "optimal sol:" << endl;
+    for(int i = 0; i < _numStates; i++)
+    {
+        cout << optimalSolution[i] << endl;
+    }
+
     // 找到最後一個斜線的位置
     size_t lastSlashPos = _inputFileName.find_last_of('/');
     
     // 提取最後的檔案名
     std::string filename = _inputFileName.substr(lastSlashPos + 1);
 
-    cout << filename <<": Initial: "<< initialCost << ", Optimal: " << optimalCost << endl;
+    cout << filename <<": Initial: "<< initialCost << ", Optimal: " << optimalCost << ", power reduction: " << (initialCost-optimalCost)/initialCost *100 << "%" << endl;
 }
 
 std::vector<std::string> State_assigner::doSA(const std::vector<std::string>& initialSolution, double initialTemperature, double coolingRate, int iterations)
@@ -783,13 +795,13 @@ std::vector<std::string> State_assigner::doSA(const std::vector<std::string>& in
         std::vector<std::string> newSolution = generateNeighbor(currentSolution);
         // double newCost = calcCost(newSolution);
         double newCost = calcCostEDA(newSolution);
+        cout << "iter: " << i << "\t" << "current: " << currentCost << ", newCost: " << newCost << endl;
         // 根據能量差和溫度決定是否接受新解
         if (newCost < currentCost || distribution(generator) < std::exp((currentCost - newCost) / temperature)) 
         {
             currentSolution = newSolution;
             currentCost = newCost;
         }
-        cout << "iter: " << i << "\t" << "cost: " << currentCost << endl;
     }
     return currentSolution;
 }
@@ -928,9 +940,11 @@ double State_assigner::calcCostEDA(const std::vector<std::string>& stateAssignme
     // 提取文件名（不包含路径和扩展名）
     std::string fileName = _inputFileName.substr(lastSlashIndex + 1, lastDotIndex - lastSlashIndex - 1);
     std::string cmdName = "./sis -xf tcl/"+ fileName + ".tcl";
+    // cout << "cmdName = " << cmdName << endl;
     std::string result = executeCommand(cmdName);
+    // cout << "Result = " << result << endl;
     double cost = extractPowerValue(result);
-    if(cost == -1) { std::cerr << "cost function failed!!!" << endl;}
+    if(cost == -1) { std::cerr << "cost function failed!!!" << endl; assert(0);}
     // cout << cost << endl;
     return cost;
 }
