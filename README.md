@@ -11,4 +11,6 @@ HW1 is the reflection and experiment on using SIS and ABC with MCNC benchmark.
 
 HW2 is the reflection and experiment on using SAT-ATTACK TOOL.
 
+## Final Project 
 
+Final Project is to do the State Assignment with Low Power Dissipation.

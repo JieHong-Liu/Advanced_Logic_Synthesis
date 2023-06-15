@@ -18,7 +18,8 @@ def verification(filePath,key_value) -> bool: # this method return True or False
         arguments = ['','','']
         fileName  = filePath.split('/')[-1]
         if(filePath.split('/')[0] == 'sarlock'):
-            arguments[0] = './benchmarks/sarlock/original/' + fileName.split('_')[0] + 'bench'
+            arguments[0] = './benchmarks/sarlock/original/' + fileName.split('_')[0] + '.bench'
+            print("sarlock argu[0]=", arguments[0])
         else:
             arguments[0] = './benchmarks/original/' + fileName.split('_')[0] + '.bench' 
         arguments[1] = './benchmarks/' + filePath
@@ -34,7 +35,8 @@ def verification(filePath,key_value) -> bool: # this method return True or False
 def main():
 
     # read output.txt 
-    filename = 'results/0508/output-0508.csv'
+    filename = 'results/0509/output.csv'
+    newFileName = 'results/0509/output-ver.csv'
     # Read the existing CSV file
     with open(filename, 'r+') as file:
         reader = csv.reader(file)
@@ -57,7 +59,7 @@ def main():
                 row.append(ver_result)
         print("There is ", failed_count , " datas can't finished ATTACK!!!")
     
-        with open('results/0508/ver-output.csv','a') as ver_file:
+        with open(newFileName,'a') as ver_file:
             writer = csv.writer(ver_file)
             writer.writerows(rows)
 
