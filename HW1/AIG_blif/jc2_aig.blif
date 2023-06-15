@@ -1,0 +1,13 @@
+# Benchmark "jclin1" written by ABC on Fri Apr 14 17:26:49 2023
+.model jclin1
+.inputs a b
+.outputs c d e f
+.names a b c
+00 0
+.names a b d
+10 0
+.names a b e
+01 0
+.names a b f
+11 0
+.end

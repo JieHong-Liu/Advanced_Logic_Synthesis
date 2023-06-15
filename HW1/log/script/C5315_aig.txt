@@ -1,0 +1,2 @@
+C5315.iscas   	pi=178	po=123	nodes=358	latches= 0
+lits(sop)=2081

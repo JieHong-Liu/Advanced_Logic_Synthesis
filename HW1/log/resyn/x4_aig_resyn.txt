@@ -1,0 +1,2 @@
+x4            	pi=94	po=71	nodes=299	latches= 0
+lits(sop)= 592

@@ -1,0 +1,2 @@
+vda           	pi=17	po=39	nodes=207	latches= 0
+lits(sop)= 765

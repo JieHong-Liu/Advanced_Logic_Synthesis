@@ -1,0 +1,41 @@
+# Benchmark "CM42" written by ABC on Fri Apr 14 17:27:01 2023
+.model CM42
+.inputs a b c d
+.outputs e f g h i j k l m n
+.names c d new_n15_
+00 1
+.names a b new_n16_
+00 1
+.names new_n15_ new_n16_ e
+11 0
+.names a b new_n18_
+10 1
+.names new_n15_ new_n18_ f
+11 0
+.names a b new_n20_
+01 1
+.names new_n15_ new_n20_ g
+11 0
+.names a b new_n22_
+11 1
+.names new_n15_ new_n22_ h
+11 0
+.names d new_n15_ new_n24_
+00 1
+.names new_n16_ new_n24_ i
+11 0
+.names new_n18_ new_n24_ j
+11 0
+.names new_n20_ new_n24_ k
+11 0
+.names new_n22_ new_n24_ l
+11 0
+.names b c new_n29_
+00 1
+.names d new_n29_ new_n30_
+11 1
+.names a new_n30_ m
+01 0
+.names a new_n30_ n
+11 0
+.end

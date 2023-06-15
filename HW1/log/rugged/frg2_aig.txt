@@ -1,0 +1,2 @@
+frg2          	pi=143	po=139	nodes=238	latches= 0
+lits(sop)=1031

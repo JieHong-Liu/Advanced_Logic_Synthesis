@@ -1,0 +1,85 @@
+# Benchmark "tcon" written by ABC on Fri Apr 14 17:26:52 2023
+.model tcon
+.inputs a b c d e f g h i k l m n o p q r
+.outputs s t u v w x y z a0 b0 c0 d0 e0 f0 g0 h0
+.names a i new_n34_
+01 1
+.names k new_n34_ new_n35_
+10 1
+.names a i new_n36_
+11 1
+.names new_n35_ new_n36_ a0
+00 0
+.names b i new_n38_
+01 1
+.names l new_n38_ new_n39_
+10 1
+.names b i new_n40_
+11 1
+.names new_n39_ new_n40_ b0
+00 0
+.names c i new_n42_
+01 1
+.names m new_n42_ new_n43_
+10 1
+.names c i new_n44_
+11 1
+.names new_n43_ new_n44_ c0
+00 0
+.names d i new_n46_
+01 1
+.names n new_n46_ new_n47_
+10 1
+.names d i new_n48_
+11 1
+.names new_n47_ new_n48_ d0
+00 0
+.names e i new_n50_
+01 1
+.names o new_n50_ new_n51_
+10 1
+.names e i new_n52_
+11 1
+.names new_n51_ new_n52_ e0
+00 0
+.names f i new_n54_
+01 1
+.names p new_n54_ new_n55_
+10 1
+.names f i new_n56_
+11 1
+.names new_n55_ new_n56_ f0
+00 0
+.names g i new_n58_
+01 1
+.names q new_n58_ new_n59_
+10 1
+.names g i new_n60_
+11 1
+.names new_n59_ new_n60_ g0
+00 0
+.names h i new_n62_
+01 1
+.names r new_n62_ new_n63_
+10 1
+.names h i new_n64_
+11 1
+.names new_n63_ new_n64_ h0
+00 0
+.names k s
+1 1
+.names l t
+1 1
+.names m u
+1 1
+.names n v
+1 1
+.names o w
+1 1
+.names p x
+1 1
+.names q y
+1 1
+.names r z
+1 1
+.end

@@ -1,0 +1,2 @@
+PARITYFDS     	pi=16	po= 1	nodes= 15	latches= 0
+lits(sop)=  60

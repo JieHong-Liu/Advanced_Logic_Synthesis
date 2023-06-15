@@ -1,0 +1,2 @@
+C880.iscas    	pi=60	po=26	nodes=314	latches= 0
+lits(sop)= 628

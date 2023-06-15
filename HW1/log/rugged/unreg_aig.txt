@@ -1,0 +1,2 @@
+unreg         	pi=36	po=16	nodes= 19	latches= 0
+lits(sop)= 102

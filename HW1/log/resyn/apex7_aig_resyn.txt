@@ -1,0 +1,2 @@
+apex7         	pi=49	po=37	nodes=186	latches= 0
+lits(sop)= 372

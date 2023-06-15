@@ -1,0 +1,2 @@
+jclin1        	pi= 2	po= 4	nodes=  4	latches= 0
+lits(sop)=   8

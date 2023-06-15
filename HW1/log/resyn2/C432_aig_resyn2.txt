@@ -1,0 +1,2 @@
+C432.iscas    	pi=36	po= 7	nodes=136	latches= 0
+lits(sop)= 272

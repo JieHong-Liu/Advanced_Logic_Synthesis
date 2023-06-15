@@ -1,0 +1,2 @@
+c8            	pi=28	po=18	nodes=116	latches= 0
+lits(sop)= 232

@@ -1,0 +1,65 @@
+# Benchmark "decod" written by ABC on Fri Apr 14 17:26:50 2023
+.model decod
+.inputs a b c d e
+.outputs f g h i j k l m n o p q r s t u
+.names a e new_n22_
+11 1
+.names c d new_n23_
+11 1
+.names b new_n23_ new_n24_
+11 1
+.names new_n22_ new_n24_ f
+11 1
+.names c d new_n26_
+10 1
+.names b new_n26_ new_n27_
+11 1
+.names new_n22_ new_n27_ g
+11 1
+.names c d new_n29_
+01 1
+.names b new_n29_ new_n30_
+11 1
+.names new_n22_ new_n30_ h
+11 1
+.names c d new_n32_
+00 1
+.names b new_n32_ new_n33_
+11 1
+.names new_n22_ new_n33_ i
+11 1
+.names b new_n23_ new_n35_
+01 1
+.names new_n22_ new_n35_ j
+11 1
+.names b new_n26_ new_n37_
+01 1
+.names new_n22_ new_n37_ k
+11 1
+.names b new_n29_ new_n39_
+01 1
+.names new_n22_ new_n39_ l
+11 1
+.names b new_n32_ new_n41_
+01 1
+.names new_n22_ new_n41_ m
+11 1
+.names a e new_n43_
+01 1
+.names new_n24_ new_n43_ n
+11 1
+.names new_n27_ new_n43_ o
+11 1
+.names new_n30_ new_n43_ p
+11 1
+.names new_n33_ new_n43_ q
+11 1
+.names new_n35_ new_n43_ r
+11 1
+.names new_n37_ new_n43_ s
+11 1
+.names new_n39_ new_n43_ t
+11 1
+.names new_n41_ new_n43_ u
+11 1
+.end

@@ -1,0 +1,2 @@
+i10           	pi=257	po=224	nodes=1868	latches= 0
+lits(sop)=3725

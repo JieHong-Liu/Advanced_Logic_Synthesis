@@ -1,0 +1,2 @@
+i7            	pi=199	po=67	nodes= 79	latches= 0
+lits(sop)= 587

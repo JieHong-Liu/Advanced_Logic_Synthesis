@@ -1,0 +1,2 @@
+CM162         	pi=14	po= 5	nodes= 14	latches= 0
+lits(sop)=  60

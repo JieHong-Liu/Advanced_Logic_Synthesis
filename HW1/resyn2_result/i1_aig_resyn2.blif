@@ -1,0 +1,74 @@
+# Benchmark "i1" written by ABC on Fri Apr 14 17:27:06 2023
+.model i1
+.inputs V27_0 V7_1 V7_2 V7_3 V7_4 V7_5 V7_6 V7_7 V8_0 V9_0 V10_0 V11_0 \
+ V12_0 V13_0 V14_0 V15_0 V16_0 V17_0 V18_0 V29_0 V27_3 V22_2 V22_3 V22_4 \
+ V22_5
+.outputs V27_0 V27_1 V27_2 V27_3 V27_4 V28_0 V29_0 V30_0 V31_0 V32_0 V33_0 \
+ V34_0 V35_0 V36_0 V37_0 V38_0
+.names V7_1 V7_2 new_n42_
+00 1
+.names V7_3 V7_4 new_n43_
+00 1
+.names V7_5 V7_6 new_n44_
+00 1
+.names V7_7 new_n44_ new_n45_
+01 1
+.names new_n42_ new_n43_ new_n46_
+11 1
+.names new_n45_ new_n46_ new_n47_
+11 1
+.names V8_0 V9_0 new_n48_
+10 1
+.names V8_0 V9_0 new_n49_
+01 1
+.names new_n48_ new_n49_ new_n50_
+00 1
+.names new_n47_ new_n50_ new_n51_
+11 1
+.names V27_0 new_n51_ new_n52_
+10 1
+.names V29_0 new_n52_ V27_1
+10 1
+.names V27_0 new_n47_ new_n54_
+00 1
+.names new_n47_ new_n48_ new_n55_
+10 1
+.names V29_0 new_n54_ new_n56_
+10 1
+.names new_n55_ new_n56_ V27_2
+01 1
+.names V27_3 V22_2 V27_4
+00 0
+.names V8_0 V29_0 new_n59_
+01 1
+.names new_n47_ new_n59_ new_n60_
+11 1
+.names V10_0 new_n60_ V28_0
+00 0
+.names V18_0 V22_5 V30_0
+11 1
+.names V11_0 V22_5 V32_0
+11 1
+.names V14_0 V22_5 new_n64_
+10 1
+.names V22_3 new_n64_ V33_0
+11 1
+.names V17_0 V22_5 new_n66_
+10 1
+.names V22_3 new_n66_ V34_0
+11 1
+.names V22_4 new_n64_ V35_0
+11 1
+.names V22_4 new_n66_ V36_0
+11 1
+.names V16_0 V22_5 V37_0
+10 1
+.names V12_0 V13_0 new_n71_
+00 1
+.names V14_0 V15_0 new_n72_
+00 1
+.names new_n71_ new_n72_ V38_0
+11 0
+.names V11_0 V31_0
+1 1
+.end

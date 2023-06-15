@@ -1,0 +1,2 @@
+dalu          	pi=75	po=16	nodes=230	latches= 0
+lits(sop)=1547

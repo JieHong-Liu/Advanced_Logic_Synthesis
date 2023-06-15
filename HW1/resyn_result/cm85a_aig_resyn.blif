@@ -1,0 +1,77 @@
+# Benchmark "CM85" written by ABC on Fri Apr 14 17:27:03 2023
+.model CM85
+.inputs a b c d e f g h i j k
+.outputs l m n
+.names d e new_n15_
+00 1
+.names d e new_n16_
+11 1
+.names new_n15_ new_n16_ new_n17_
+00 1
+.names b new_n17_ new_n18_
+10 1
+.names f g new_n19_
+01 1
+.names f g new_n20_
+10 1
+.names new_n19_ new_n20_ new_n21_
+00 1
+.names new_n18_ new_n21_ new_n22_
+11 1
+.names h i new_n23_
+00 1
+.names h i new_n24_
+11 1
+.names new_n23_ new_n24_ new_n25_
+00 1
+.names new_n22_ new_n25_ new_n26_
+10 1
+.names j k new_n27_
+01 1
+.names new_n26_ new_n27_ new_n28_
+11 1
+.names h i new_n29_
+01 1
+.names new_n22_ new_n29_ new_n30_
+11 1
+.names new_n18_ new_n19_ new_n31_
+11 1
+.names b d new_n32_
+10 1
+.names e new_n32_ new_n33_
+11 1
+.names a new_n33_ new_n34_
+00 1
+.names new_n31_ new_n34_ new_n35_
+01 1
+.names new_n30_ new_n35_ new_n36_
+01 1
+.names new_n28_ new_n36_ l
+01 0
+.names j k new_n38_
+10 1
+.names new_n27_ new_n38_ new_n39_
+00 1
+.names new_n26_ new_n39_ m
+11 1
+.names new_n26_ new_n38_ new_n41_
+11 1
+.names h i new_n42_
+10 1
+.names new_n22_ new_n42_ new_n43_
+11 1
+.names new_n18_ new_n20_ new_n44_
+11 1
+.names b d new_n45_
+11 1
+.names e new_n45_ new_n46_
+01 1
+.names c new_n46_ new_n47_
+00 1
+.names new_n44_ new_n47_ new_n48_
+01 1
+.names new_n43_ new_n48_ new_n49_
+01 1
+.names new_n41_ new_n49_ n
+01 0
+.end

@@ -1,0 +1,2 @@
+DES           	pi=256	po=245	nodes=3545	latches= 0
+lits(sop)=7090

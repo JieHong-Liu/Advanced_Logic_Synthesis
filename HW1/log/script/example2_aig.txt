@@ -1,0 +1,2 @@
+example2.blif 	pi=85	po=66	nodes= 86	latches= 0
+lits(sop)= 386

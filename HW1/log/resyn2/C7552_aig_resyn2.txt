@@ -1,0 +1,2 @@
+C7552.iscas   	pi=207	po=108	nodes=1456	latches= 0
+lits(sop)=2911

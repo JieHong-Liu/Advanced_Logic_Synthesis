@@ -1,0 +1,2 @@
+cu            	pi=14	po=11	nodes= 40	latches= 0
+lits(sop)=  79

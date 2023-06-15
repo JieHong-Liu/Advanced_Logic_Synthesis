@@ -1,0 +1,2 @@
+alu4_cl       	pi=14	po= 8	nodes=652	latches= 0
+lits(sop)=1304

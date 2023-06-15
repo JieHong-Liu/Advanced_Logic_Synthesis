@@ -1,0 +1,135 @@
+# Benchmark "cc" written by ABC on Fri Apr 14 17:26:54 2023
+.model cc
+.inputs a b c d e f g h i j k l m o p q r s t u v
+.outputs w x y z a0 b0 c0 d0 e0 f0 g0 h0 i0 j0 k0 l0 m0 n0 o0 p0
+.names l v w
+11 1
+.names p q new_n43_
+01 1
+.names k new_n43_ new_n44_
+11 1
+.names i new_n44_ x
+11 1
+.names k q new_n46_
+10 1
+.names i new_n46_ new_n47_
+11 1
+.names l m new_n48_
+01 1
+.names p new_n47_ new_n49_
+00 1
+.names new_n48_ new_n49_ y
+10 1
+.names m p new_n51_
+10 1
+.names i k new_n52_
+11 1
+.names new_n51_ new_n52_ new_n53_
+11 1
+.names q new_n53_ z
+11 1
+.names i j f0
+11 1
+.names a i new_n56_
+01 1
+.names new_n46_ new_n56_ new_n57_
+11 1
+.names m new_n57_ new_n58_
+10 1
+.names o new_n47_ new_n59_
+00 1
+.names new_n58_ new_n59_ i0
+10 1
+.names k q new_n61_
+11 1
+.names i new_n61_ new_n62_
+11 1
+.names b i new_n63_
+11 1
+.names new_n46_ new_n63_ new_n64_
+11 1
+.names m new_n64_ new_n65_
+10 1
+.names p new_n62_ new_n66_
+00 1
+.names new_n65_ new_n66_ j0
+10 1
+.names c q new_n68_
+10 1
+.names q new_n52_ new_n69_
+00 1
+.names m new_n69_ new_n70_
+10 1
+.names i new_n68_ new_n71_
+10 1
+.names k new_n71_ new_n72_
+11 1
+.names new_n70_ new_n72_ k0
+10 1
+.names d i new_n74_
+01 1
+.names new_n46_ new_n74_ new_n75_
+11 1
+.names m new_n75_ new_n76_
+10 1
+.names p r new_n77_
+01 1
+.names new_n47_ new_n77_ new_n78_
+00 1
+.names new_n76_ new_n78_ l0
+10 1
+.names e i new_n80_
+01 1
+.names new_n46_ new_n80_ new_n81_
+11 1
+.names m new_n81_ new_n82_
+10 1
+.names s new_n47_ new_n83_
+00 1
+.names new_n82_ new_n83_ m0
+10 1
+.names f i new_n85_
+01 1
+.names new_n46_ new_n85_ new_n86_
+11 1
+.names m new_n86_ new_n87_
+10 1
+.names t new_n47_ new_n88_
+00 1
+.names new_n87_ new_n88_ n0
+10 1
+.names g i new_n90_
+01 1
+.names new_n46_ new_n90_ new_n91_
+11 1
+.names m new_n91_ new_n92_
+10 1
+.names u new_n47_ new_n93_
+00 1
+.names new_n92_ new_n93_ o0
+10 1
+.names h i new_n95_
+01 1
+.names new_n46_ new_n95_ new_n96_
+11 1
+.names m new_n96_ new_n97_
+10 1
+.names v new_n47_ new_n98_
+00 1
+.names new_n97_ new_n98_ p0
+10 1
+.names t a0
+0 1
+.names f0 g0
+0 1
+.names u b0
+1 1
+.names q c0
+1 1
+.names s d0
+1 1
+.names r e0
+1 1
+.names p h0
+1 1
+.end

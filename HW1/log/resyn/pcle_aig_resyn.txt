@@ -1,0 +1,2 @@
+pcle_cl       	pi=19	po= 9	nodes= 48	latches= 0
+lits(sop)=  96

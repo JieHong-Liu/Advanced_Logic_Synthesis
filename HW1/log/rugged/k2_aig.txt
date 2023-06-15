@@ -1,0 +1,2 @@
+k2            	pi=45	po=45	nodes=380	latches= 0
+lits(sop)=1552

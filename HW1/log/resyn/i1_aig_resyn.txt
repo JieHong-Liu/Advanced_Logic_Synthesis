@@ -1,0 +1,2 @@
+i1            	pi=25	po=16	nodes= 36	latches= 0
+lits(sop)=  72

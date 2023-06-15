@@ -1,0 +1,97 @@
+# Benchmark "mux" written by ABC on Fri Apr 14 17:26:56 2023
+.model mux
+.inputs a b c d e f g h i j k l m n o p q r s t u
+.outputs v
+.names o s new_n23_
+10 1
+.names m s new_n24_
+11 1
+.names t new_n23_ new_n25_
+10 1
+.names new_n24_ new_n25_ new_n26_
+01 1
+.names p s new_n27_
+10 1
+.names n s new_n28_
+11 1
+.names t new_n27_ new_n29_
+00 1
+.names new_n28_ new_n29_ new_n30_
+01 1
+.names r new_n26_ new_n31_
+00 1
+.names new_n30_ new_n31_ new_n32_
+01 1
+.names l s new_n33_
+10 1
+.names j s new_n34_
+11 1
+.names t new_n33_ new_n35_
+00 1
+.names new_n34_ new_n35_ new_n36_
+01 1
+.names k s new_n37_
+10 1
+.names i s new_n38_
+11 1
+.names t new_n37_ new_n39_
+10 1
+.names new_n38_ new_n39_ new_n40_
+01 1
+.names r new_n36_ new_n41_
+10 1
+.names new_n40_ new_n41_ new_n42_
+01 1
+.names q new_n32_ new_n43_
+00 1
+.names new_n42_ new_n43_ new_n44_
+01 1
+.names f s new_n45_
+01 1
+.names h s new_n46_
+00 1
+.names t new_n45_ new_n47_
+00 1
+.names new_n46_ new_n47_ new_n48_
+01 1
+.names e s new_n49_
+01 1
+.names g s new_n50_
+00 1
+.names t new_n49_ new_n51_
+10 1
+.names new_n50_ new_n51_ new_n52_
+01 1
+.names new_n48_ new_n52_ new_n53_
+00 1
+.names r new_n53_ new_n54_
+00 1
+.names d s new_n55_
+00 1
+.names b s new_n56_
+01 1
+.names t new_n55_ new_n57_
+00 1
+.names new_n56_ new_n57_ new_n58_
+01 1
+.names c s new_n59_
+00 1
+.names a s new_n60_
+01 1
+.names t new_n59_ new_n61_
+10 1
+.names new_n60_ new_n61_ new_n62_
+01 1
+.names new_n58_ new_n62_ new_n63_
+00 1
+.names r new_n63_ new_n64_
+10 1
+.names q new_n54_ new_n65_
+10 1
+.names new_n64_ new_n65_ new_n66_
+01 1
+.names u new_n44_ new_n67_
+10 1
+.names new_n66_ new_n67_ v
+01 1
+.end

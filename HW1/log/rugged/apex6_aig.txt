@@ -1,0 +1,2 @@
+apex6         	pi=135	po=99	nodes=153	latches= 0
+lits(sop)= 861

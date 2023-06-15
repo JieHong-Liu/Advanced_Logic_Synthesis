@@ -1,0 +1,17 @@
+# Benchmark "C17.iscas" written by ABC on Fri Apr 14 17:27:06 2023
+.model C17.iscas
+.inputs 1GAT(0) 2GAT(1) 3GAT(2) 6GAT(3) 7GAT(4)
+.outputs 22GAT(10) 23GAT(9)
+.names 1GAT(0) 3GAT(2) new_n8_
+11 1
+.names 3GAT(2) 6GAT(3) new_n9_
+11 1
+.names 2GAT(1) new_n9_ new_n10_
+10 1
+.names new_n8_ new_n10_ 22GAT(10)
+00 0
+.names 7GAT(4) new_n9_ new_n12_
+10 1
+.names new_n10_ new_n12_ 23GAT(9)
+00 0
+.end

@@ -1,0 +1,2 @@
+count         	pi=35	po=16	nodes= 31	latches= 0
+lits(sop)= 159

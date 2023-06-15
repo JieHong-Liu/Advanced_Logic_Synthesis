@@ -1,0 +1,2 @@
+too_large     	pi=38	po= 3	nodes=824	latches= 0
+lits(sop)=1648

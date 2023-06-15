@@ -1,0 +1,2 @@
+lal           	pi=26	po=19	nodes= 28	latches= 0
+lits(sop)= 123

@@ -1,0 +1,2 @@
+CM42          	pi= 4	po=10	nodes= 13	latches= 0
+lits(sop)=  34

@@ -1,0 +1,2 @@
+CM163         	pi=16	po= 5	nodes= 36	latches= 0
+lits(sop)=  72

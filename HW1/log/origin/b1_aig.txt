@@ -1,0 +1,2 @@
+b1            	pi= 3	po= 4	nodes= 13	latches= 0
+lits(sop)=  25

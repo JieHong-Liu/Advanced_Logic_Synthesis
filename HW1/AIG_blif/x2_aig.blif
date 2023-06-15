@@ -1,0 +1,113 @@
+# Benchmark "x2" written by ABC on Fri Apr 14 17:26:50 2023
+.model x2
+.inputs a b c d e f g h i j
+.outputs k l m n o p q
+.names h i new_n18_
+10 1
+.names j new_n18_ new_n19_
+11 1
+.names h i new_n20_
+01 1
+.names i j new_n21_
+11 1
+.names h j new_n22_
+01 1
+.names new_n21_ new_n22_ new_n23_
+00 1
+.names i j new_n24_
+00 1
+.names new_n19_ new_n24_ new_n25_
+00 1
+.names new_n20_ new_n25_ new_n26_
+01 1
+.names new_n23_ new_n26_ k
+11 0
+.names h j new_n28_
+10 1
+.names new_n20_ new_n28_ new_n29_
+00 1
+.names new_n23_ new_n29_ l
+11 0
+.names h i new_n31_
+00 1
+.names j new_n31_ m
+01 1
+.names a b new_n33_
+00 1
+.names c new_n22_ new_n34_
+00 1
+.names new_n33_ new_n34_ new_n35_
+11 1
+.names new_n19_ new_n21_ new_n36_
+00 1
+.names new_n28_ m new_n37_
+00 1
+.names new_n36_ new_n37_ new_n38_
+11 1
+.names new_n35_ new_n38_ n
+11 0
+.names new_n20_ m new_n40_
+00 1
+.names new_n21_ new_n40_ new_n41_
+01 1
+.names g new_n22_ new_n42_
+10 1
+.names new_n41_ new_n42_ o
+11 0
+.names f h new_n44_
+10 1
+.names i new_n44_ new_n45_
+11 1
+.names j new_n45_ new_n46_
+11 1
+.names c h new_n47_
+10 1
+.names new_n33_ new_n47_ new_n48_
+11 1
+.names j new_n48_ new_n49_
+10 1
+.names i new_n49_ new_n50_
+00 1
+.names b c new_n51_
+01 1
+.names a new_n51_ new_n52_
+01 1
+.names new_n21_ new_n52_ new_n53_
+11 1
+.names d e new_n54_
+10 1
+.names j new_n54_ new_n55_
+01 1
+.names new_n53_ new_n55_ new_n56_
+00 1
+.names h new_n56_ new_n57_
+10 1
+.names g new_n46_ new_n58_
+10 1
+.names new_n57_ new_n58_ new_n59_
+01 1
+.names new_n50_ new_n59_ p
+01 0
+.names c j new_n61_
+01 1
+.names new_n33_ new_n61_ new_n62_
+11 1
+.names d j new_n63_
+10 1
+.names e i new_n64_
+11 1
+.names new_n63_ new_n64_ new_n65_
+11 1
+.names new_n62_ new_n65_ new_n66_
+00 1
+.names h new_n66_ new_n67_
+10 1
+.names m new_n46_ new_n68_
+00 1
+.names g new_n19_ new_n69_
+10 1
+.names new_n68_ new_n69_ new_n70_
+11 1
+.names new_n67_ new_n70_ q
+01 0
+.end

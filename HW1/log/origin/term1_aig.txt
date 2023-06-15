@@ -1,0 +1,2 @@
+term1         	pi=34	po=10	nodes=312	latches= 0
+lits(sop)= 623

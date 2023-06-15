@@ -1,0 +1,2 @@
+tcon          	pi=17	po=16	nodes= 24	latches= 0
+lits(sop)=  48

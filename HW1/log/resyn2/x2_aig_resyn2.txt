@@ -1,0 +1,2 @@
+x2            	pi=10	po= 7	nodes= 40	latches= 0
+lits(sop)=  80

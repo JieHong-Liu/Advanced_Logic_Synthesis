@@ -1,0 +1,2 @@
+z4ml          	pi= 7	po= 4	nodes=  8	latches= 0
+lits(sop)=  56

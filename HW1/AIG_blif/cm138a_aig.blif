@@ -1,0 +1,37 @@
+# Benchmark "CM138" written by ABC on Fri Apr 14 17:26:53 2023
+.model CM138
+.inputs a b c d e f
+.outputs g h i j k l m n
+.names e f new_n15_
+00 1
+.names d new_n15_ new_n16_
+11 1
+.names c new_n16_ new_n17_
+01 1
+.names a b new_n18_
+00 1
+.names new_n17_ new_n18_ g
+11 0
+.names a b new_n20_
+10 1
+.names new_n17_ new_n20_ h
+11 0
+.names a b new_n22_
+01 1
+.names new_n17_ new_n22_ i
+11 0
+.names a b new_n24_
+11 1
+.names new_n17_ new_n24_ j
+11 0
+.names c new_n16_ new_n26_
+11 1
+.names new_n18_ new_n26_ k
+11 0
+.names new_n20_ new_n26_ l
+11 0
+.names new_n22_ new_n26_ m
+11 0
+.names new_n24_ new_n26_ n
+11 0
+.end

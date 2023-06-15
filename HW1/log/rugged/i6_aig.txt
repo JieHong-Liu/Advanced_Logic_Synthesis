@@ -1,0 +1,2 @@
+i6            	pi=138	po=67	nodes= 76	latches= 0
+lits(sop)= 457

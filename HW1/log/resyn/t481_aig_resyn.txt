@@ -1,0 +1,2 @@
+t481          	pi=16	po= 1	nodes=876	latches= 0
+lits(sop)=1752

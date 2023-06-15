@@ -1,0 +1,4 @@
+The BDD's for this circuit have more than 480000 nodes.
+full_simplify is not performed. 
+C7552.iscas   	pi=207	po=108	nodes=552	latches= 0
+lits(sop)=3048

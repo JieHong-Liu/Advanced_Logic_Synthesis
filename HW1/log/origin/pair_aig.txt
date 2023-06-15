@@ -1,0 +1,2 @@
+pair          	pi=173	po=137	nodes=1500	latches= 0
+lits(sop)=3000

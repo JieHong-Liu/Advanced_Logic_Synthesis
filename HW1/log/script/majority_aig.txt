@@ -1,0 +1,2 @@
+traffic_cl    	pi= 5	po= 1	nodes=  1	latches= 0
+lits(sop)=  13

@@ -1,0 +1,47 @@
+# Benchmark "mux_cl" written by ABC on Fri Apr 14 17:27:01 2023
+.model mux_cl
+.inputs a b c d e f g h i j k
+.outputs l
+.names g i new_n13_
+00 1
+.names h i new_n14_
+01 1
+.names j new_n13_ new_n15_
+10 1
+.names new_n14_ new_n15_ new_n16_
+01 1
+.names e i new_n17_
+00 1
+.names f i new_n18_
+01 1
+.names j new_n17_ new_n19_
+00 1
+.names new_n18_ new_n19_ new_n20_
+01 1
+.names new_n16_ new_n20_ new_n21_
+00 1
+.names k new_n21_ new_n22_
+10 1
+.names c i new_n23_
+00 1
+.names d i new_n24_
+01 1
+.names j new_n23_ new_n25_
+10 1
+.names new_n24_ new_n25_ new_n26_
+01 1
+.names a i new_n27_
+00 1
+.names b i new_n28_
+01 1
+.names j new_n27_ new_n29_
+00 1
+.names new_n28_ new_n29_ new_n30_
+01 1
+.names new_n26_ new_n30_ new_n31_
+00 1
+.names k new_n31_ new_n32_
+00 1
+.names new_n22_ new_n32_ l
+00 0
+.end

@@ -1,0 +1,2 @@
+mux_cl        	pi=11	po= 1	nodes=  3	latches= 0
+lits(sop)=  28

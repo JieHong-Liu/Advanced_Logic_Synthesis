@@ -1,0 +1,2 @@
+read_blif ./resyn_result/too_large_aig_resyn.blif
+print_stats

@@ -1,0 +1,2 @@
+f51m          	pi= 8	po= 8	nodes=117	latches= 0
+lits(sop)= 233

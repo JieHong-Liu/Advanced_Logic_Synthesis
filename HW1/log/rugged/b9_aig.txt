@@ -1,0 +1,2 @@
+b9            	pi=41	po=21	nodes= 30	latches= 0
+lits(sop)= 168

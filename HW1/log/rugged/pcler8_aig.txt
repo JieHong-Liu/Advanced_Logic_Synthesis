@@ -1,0 +1,2 @@
+pcler8_cl     	pi=27	po=17	nodes= 22	latches= 0
+lits(sop)= 102

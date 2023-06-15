@@ -1,0 +1,2 @@
+C2670.iscas   	pi=233	po=140	nodes=600	latches= 0
+lits(sop)=1184

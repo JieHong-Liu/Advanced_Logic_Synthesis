@@ -1,0 +1,2 @@
+rot           	pi=135	po=107	nodes=552	latches= 0
+lits(sop)=1102

@@ -1,0 +1,2 @@
+lif/9symml    	pi= 9	po= 1	nodes=194	latches= 0
+lits(sop)= 388

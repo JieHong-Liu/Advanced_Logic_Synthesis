@@ -1,0 +1,2 @@
+cmb           	pi=16	po= 4	nodes= 10	latches= 0
+lits(sop)=  62

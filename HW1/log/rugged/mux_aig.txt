@@ -1,0 +1,2 @@
+mux           	pi=21	po= 1	nodes= 14	latches= 0
+lits(sop)=  94

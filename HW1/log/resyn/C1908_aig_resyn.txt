@@ -1,0 +1,2 @@
+C1908.iscas   	pi=33	po=25	nodes=374	latches= 0
+lits(sop)= 748

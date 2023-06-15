@@ -1,0 +1,85 @@
+# Benchmark "cu" written by ABC on Fri Apr 14 17:26:59 2023
+.model cu
+.inputs a b c d e f g i j k l m n o
+.outputs p q r s t u v w x y z
+.names e f new_n26_
+01 1
+.names c e new_n27_
+11 1
+.names new_n26_ new_n27_ new_n28_
+00 1
+.names c f new_n29_
+11 1
+.names d new_n29_ new_n30_
+00 1
+.names new_n28_ new_n30_ q
+01 1
+.names a b new_n32_
+00 1
+.names c d new_n33_
+00 1
+.names o new_n33_ new_n34_
+01 1
+.names new_n26_ new_n34_ w
+11 1
+.names new_n32_ w r
+11 1
+.names a w new_n37_
+11 1
+.names b new_n37_ s
+01 1
+.names a b new_n39_
+01 1
+.names w new_n39_ t
+11 1
+.names b new_n37_ u
+11 1
+.names j new_n32_ new_n42_
+11 1
+.names l new_n39_ new_n43_
+11 1
+.names f n new_n44_
+10 1
+.names b k new_n45_
+00 1
+.names b m new_n46_
+10 1
+.names a new_n45_ new_n47_
+10 1
+.names new_n46_ new_n47_ new_n48_
+01 1
+.names i o new_n49_
+01 1
+.names new_n44_ new_n49_ new_n50_
+11 1
+.names new_n42_ new_n50_ new_n51_
+01 1
+.names new_n43_ new_n51_ new_n52_
+01 1
+.names new_n48_ new_n52_ new_n53_
+01 1
+.names c new_n53_ new_n54_
+00 1
+.names f o new_n55_
+00 1
+.names c new_n55_ new_n56_
+10 1
+.names d e new_n57_
+01 1
+.names new_n56_ new_n57_ new_n58_
+01 1
+.names new_n54_ new_n58_ v
+01 1
+.names o new_n44_ new_n60_
+11 1
+.names c new_n60_ new_n61_
+00 1
+.names new_n58_ new_n61_ x
+10 1
+.names g o y
+11 1
+.names g new_n30_ z
+11 1
+.names q p
+0 1
+.end

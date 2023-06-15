@@ -1,0 +1,81 @@
+# Benchmark "CM162" written by ABC on Fri Apr 14 17:26:50 2023
+.model CM162
+.inputs a b c d e f g h i j k l m n
+.outputs o p q r s
+.names d f new_n20_
+01 1
+.names j n new_n21_
+11 1
+.names c d new_n22_
+11 1
+.names e new_n22_ new_n23_
+11 1
+.names new_n21_ new_n23_ new_n24_
+11 1
+.names new_n20_ new_n24_ new_n25_
+10 1
+.names i new_n23_ new_n26_
+11 1
+.names i new_n23_ new_n27_
+00 1
+.names new_n26_ new_n27_ new_n28_
+00 1
+.names d f new_n29_
+11 1
+.names new_n24_ new_n29_ new_n30_
+01 1
+.names new_n28_ new_n30_ new_n31_
+01 1
+.names a new_n25_ new_n32_
+11 1
+.names new_n31_ new_n32_ o
+00 1
+.names i new_n23_ new_n34_
+01 1
+.names k new_n34_ new_n35_
+11 1
+.names k new_n34_ new_n36_
+00 1
+.names new_n35_ new_n36_ new_n37_
+00 1
+.names new_n30_ new_n37_ new_n38_
+10 1
+.names b new_n25_ new_n39_
+11 1
+.names new_n38_ new_n39_ p
+00 1
+.names k new_n34_ new_n41_
+01 1
+.names l new_n41_ new_n42_
+11 1
+.names l new_n41_ new_n43_
+00 1
+.names new_n42_ new_n43_ new_n44_
+00 1
+.names new_n30_ new_n44_ new_n45_
+10 1
+.names g new_n25_ new_n46_
+11 1
+.names new_n45_ new_n46_ q
+00 1
+.names l new_n23_ new_n48_
+01 1
+.names i new_n48_ new_n49_
+01 1
+.names k new_n49_ new_n50_
+01 1
+.names m new_n50_ new_n51_
+11 1
+.names m new_n50_ new_n52_
+00 1
+.names new_n51_ new_n52_ new_n53_
+00 1
+.names new_n30_ new_n53_ new_n54_
+10 1
+.names h new_n25_ new_n55_
+11 1
+.names new_n54_ new_n55_ r
+00 1
+.names e new_n21_ s
+11 1
+.end

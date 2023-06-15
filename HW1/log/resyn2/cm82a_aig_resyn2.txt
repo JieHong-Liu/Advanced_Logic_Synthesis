@@ -1,0 +1,2 @@
+CM82          	pi= 5	po= 3	nodes= 16	latches= 0
+lits(sop)=  32

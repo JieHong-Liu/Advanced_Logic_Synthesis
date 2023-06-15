@@ -1,0 +1,2 @@
+ADDERFDS      	pi=33	po=17	nodes=176	latches= 0
+lits(sop)= 352

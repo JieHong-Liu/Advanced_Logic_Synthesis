@@ -1,0 +1,2 @@
+ttt2          	pi=24	po=21	nodes=152	latches= 0
+lits(sop)= 304

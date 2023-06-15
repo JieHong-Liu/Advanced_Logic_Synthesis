@@ -1,0 +1,2 @@
+frg1          	pi=28	po= 3	nodes= 19	latches= 0
+lits(sop)= 208

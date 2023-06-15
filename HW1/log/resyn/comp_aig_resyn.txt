@@ -1,0 +1,2 @@
+comp          	pi=32	po= 3	nodes= 94	latches= 0
+lits(sop)= 188

@@ -1,0 +1,2 @@
+CM151         	pi=12	po= 2	nodes=  7	latches= 0
+lits(sop)=  39

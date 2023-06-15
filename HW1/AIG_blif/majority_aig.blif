@@ -1,0 +1,21 @@
+# Benchmark "traffic_cl" written by ABC on Fri Apr 14 17:26:53 2023
+.model traffic_cl
+.inputs a b c d e
+.outputs f
+.names c e new_n7_
+11 1
+.names b new_n7_ new_n8_
+11 1
+.names a new_n8_ new_n9_
+00 1
+.names b new_n7_ new_n10_
+00 1
+.names c e new_n11_
+00 1
+.names new_n10_ new_n11_ new_n12_
+00 1
+.names new_n9_ new_n12_ new_n13_
+01 1
+.names d new_n13_ f
+00 0
+.end

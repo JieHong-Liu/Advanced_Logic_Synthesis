@@ -1,0 +1,2 @@
+CM150         	pi=21	po= 1	nodes= 61	latches= 0
+lits(sop)= 122

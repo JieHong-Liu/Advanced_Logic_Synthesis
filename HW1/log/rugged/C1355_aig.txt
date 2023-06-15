@@ -1,0 +1,2 @@
+C1355.iscas   	pi=41	po=32	nodes=162	latches= 0
+lits(sop)= 558

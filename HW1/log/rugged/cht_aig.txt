@@ -1,0 +1,2 @@
+cht           	pi=47	po=36	nodes= 46	latches= 0
+lits(sop)= 166

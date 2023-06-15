@@ -1,0 +1,2 @@
+x3.blif       	pi=135	po=99	nodes=613	latches= 0
+lits(sop)=1226

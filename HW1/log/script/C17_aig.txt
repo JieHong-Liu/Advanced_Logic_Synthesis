@@ -1,0 +1,2 @@
+C17.iscas     	pi= 5	po= 2	nodes=  2	latches= 0
+lits(sop)=  14

@@ -1,0 +1,2 @@
+cc            	pi=21	po=20	nodes= 60	latches= 0
+lits(sop)= 118

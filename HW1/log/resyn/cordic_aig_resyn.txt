@@ -1,0 +1,2 @@
+cordic        	pi=23	po= 2	nodes= 55	latches= 0
+lits(sop)= 110

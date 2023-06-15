@@ -1,0 +1,2 @@
+C3540.iscas   	pi=50	po=22	nodes=1038	latches= 0
+lits(sop)=2076

@@ -1,0 +1,77 @@
+# Benchmark "pm1" written by ABC on Fri Apr 14 17:27:06 2023
+.model pm1
+.inputs a b c d e g h i j k l m n o p q
+.outputs r s t u v w x y z a0 b0 c0 d0
+.names b m new_n30_
+00 1
+.names n new_n30_ r
+01 0
+.names m n s
+01 0
+.names g h new_n33_
+11 1
+.names i j new_n34_
+11 1
+.names new_n33_ new_n34_ new_n35_
+11 1
+.names m n new_n36_
+11 1
+.names k new_n36_ new_n37_
+11 1
+.names new_n35_ new_n37_ t
+11 0
+.names new_n35_ new_n37_ u
+01 0
+.names c d new_n40_
+11 1
+.names e new_n40_ new_n41_
+11 1
+.names s new_n41_ new_n42_
+11 1
+.names b k new_n43_
+11 1
+.names new_n42_ new_n43_ x
+01 1
+.names a l new_n45_
+10 1
+.names m new_n45_ new_n46_
+11 1
+.names k n new_n47_
+11 1
+.names new_n41_ new_n47_ new_n48_
+11 1
+.names new_n46_ new_n48_ z
+10 0
+.names m n new_n50_
+00 1
+.names new_n36_ new_n50_ new_n51_
+00 1
+.names new_n45_ new_n51_ a0
+10 1
+.names new_n41_ new_n47_ new_n53_
+01 1
+.names new_n46_ new_n53_ b0
+11 1
+.names b m new_n55_
+01 1
+.names new_n37_ new_n41_ new_n56_
+10 1
+.names new_n55_ new_n56_ new_n57_
+00 1
+.names b n new_n58_
+01 1
+.names new_n45_ new_n58_ new_n59_
+10 1
+.names new_n57_ new_n59_ c0
+01 1
+.names k new_n36_ new_n61_
+01 1
+.names new_n45_ new_n61_ d0
+11 1
+.names p v
+0 1
+.names o w
+0 1
+.names q y
+0 1
+.end

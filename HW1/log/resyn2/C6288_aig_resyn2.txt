@@ -1,0 +1,2 @@
+C6288.iscas   	pi=32	po=32	nodes=1870	latches= 0
+lits(sop)=3740
