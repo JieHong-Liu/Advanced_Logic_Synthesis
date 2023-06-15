@@ -29,10 +29,10 @@
 10 st5 st5 00
 11 st5 st5 00
 .end_kiss
-.code st0 100
-.code st1 000
-.code st2 010
-.code st3 011
-.code st4 001
-.code st5 101
+.code st0 011
+.code st1 101
+.code st2 000
+.code st3 010
+.code st4 100
+.code st5 001
 .end

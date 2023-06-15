@@ -22,7 +22,8 @@
 
 
 LIBROOT=/users/student/mr111/jhliu22/ALS/HW3/lib
-LEDAROOT=/users/student/mr111/jhliu22/LEDA_lib/LEDA
+# LEDAROOT=/users/student/mr111/jhliu22/LEDA_lib/LEDA
+LEDAROOT=/users/student/mr111/jhliu22/ALS/HW3/LEDA
 GLPKROOT=/users/student/mr111/jhliu22/ALS/HW3/glpk-4.47/src/
 CPP = g++
 CPPFLAGS = -std=c++11 -O3 -g -I$(LEDAROOT)/incl -I$(LIBROOT) -I$(GLPKROOT)
@@ -42,3 +43,13 @@ $(EXE): $(OBJS)
 
 clean:
 	rm -f $(OBJS) $(EXE)
+
+
+ifeq (test, $(firstword $(MAKECMDGOALS)))
+  TESTCASE := $(word 2, $(MAKECMDGOALS))
+  $(eval $(TESTCASE):;@:)
+endif
+
+test: $(EXE)
+	@echo test on $(TESTCASE) 
+	./$(EXE) ./resource/benchmarks/$(TESTCASE).kiss ./outputBLIF/$(TESTCASE).blif

@@ -34,9 +34,16 @@ $ ./bin/sa ./resource/benchmarks/bbara_opt.kiss ./outputBLIF/bbara_opt.blif
 In `HW3/`, enter the following command:
 
 ```
-$ sh demo.sh
+$ make test $name
+```
+
+It will build an executable file and test on testcase $name with k=$k.
+
+E.g., test on s27_opt
+
+```
+$ make test s27_opt
 ```
 
 It will build an executable file and test on testcase (here is s27_opt.kiss), and it will print the result of my optimization result and SIS optimization result.
 
-If you want to change to other testcase, just modify the testcase name in `demo.sh`, it would show the result automatically.

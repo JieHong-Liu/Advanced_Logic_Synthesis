@@ -35,9 +35,9 @@
 1-1- S4 S2 1
 1-0- S4 S0 1
 .end_kiss
-.code S0 100
-.code S1 010
-.code S2 000
-.code S3 011
-.code S4 001
+.code S0 001
+.code S1 000
+.code S2 100
+.code S3 010
+.code S4 011
 .end
