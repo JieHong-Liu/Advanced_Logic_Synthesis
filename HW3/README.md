@@ -1,4 +1,4 @@
-# State Assignment
+# FSM State Assignment for Low Power Dissipation
 
 Implement a state assignment algorithm for Finite State Machine.
 + Minimum power dissipation 
@@ -37,7 +37,7 @@ In `HW3/`, enter the following command:
 $ make test $name
 ```
 
-It will build an executable file and test on testcase $name with k=$k.
+It will build an executable file and test on testcase $name.
 
 E.g., test on s27_opt
 
